@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>景点列表</title>
+	<link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+	<style>
+		/* 自定义样式 */
+		body, html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+		}
+		.nav-item a {
+			display: block;
+			padding: 10px;
+			color: #fff;
+			text-decoration: none;
+			transition: background-color 0.3s;
+			border-left: 5px solid transparent;
+		}
+		.nav-item a:hover {
+			background-color: #5FB878;
+			border-left-color: #FF5722;
+		}
+		.header {
+			background-color: #393D49;
+			color: #fff;
+			height: 50px;
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			line-height: 50px;
+			padding-left: 10px;
+			z-index: 1000;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+		.layui-table-cell{
+			text-align:center;
+			height: auto;
+			white-space: normal;
+		}
+
+
+	</style>
+
+</head>
+<body>
+<!-- 根据后端数据生成数据表格 -->
+<table class="layui-hide " id="test" lay-filter="test"></table>
+
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+
+<script th:inline="none">
+
+	layui.use(function(){
+
+		//获取table组件的对象
+		let table = layui.table;
+		let $=layui.$;
+		let layer=layui.layer;
+
+
+		//头部工具栏事件
+		table.on('toolbar(test)',function(obj){
+			console.log("顶部工具栏事件被触发了...",obj)
+			let event =obj.event;
+			if(event=='addSpot'){
+				layer.open({
+					title:"添加景点信息",
+					type:2,
+					content:"/spotAddPage",
+					area:['1200px','700px'],
+					closeBtn:1,
+					end:function(){
+						table.reload("test")
+					}
+				});
+			}else if(event=='deleSpot'){
+				let id=obj.config.id;
+				let checkStatus=table.checkStatus(id);
+				let list =checkStatus.data;
+				if(list && list.length==0){
+					layer.msg("没有选择要删除的数据");
+				}else{
+					layer.confirm('确认删除?',{btn:['确定','取消']},function(index){
+						let arr=[];
+						for(let i=0;i<list.length;i++){
+							arr.push(list[i].id);
+						}
+						$.ajax({
+							type:"post",
+							url:"http://localhost:8086/spots/deleteManyScenicSpot",
+							data:JSON.stringify(arr),
+							contentType:'application/json',
+							dataType:"json",
+							success:function(d){
+								if(d.code==0){
+									table.reload("test")
+								}else{
+									layer.msg(d.msg);
+								}
+							}
+						});
+						layer.close(index);
+					});
+				}
+			}
+		});
+
+		table.on('tool(test)',function(obj){
+			console.log(obj);
+			let event=obj.event;
+			if(event=='del'){
+				layer.confirm('确定删除?',{btn:['确定','取消']},function(index){
+					//确定删除
+
+					//AJAX调用
+					let id =obj.data.id;
+					$.ajax({
+						type:"DELETE",
+						url:"http://localhost:8086/spots/delById",
+						data:{ id: obj.data.id },
+						success:function(d){
+							if(d.code==0){
+								table.reload("test")
+							}else{
+								layer.msg(d.msg);
+							}
+						}
+					});
+					//关闭提示框
+					layer.close(index);
+				});
+
+
+			}else if(event=='edit'){
+				layer.open({
+					title:"更新景点信息",
+					type:2,
+					content:"/spotEditPage?soptState="+obj.data.soptState+"&id="+obj.data.id,
+					area:['1000px','650px'],
+					closeBtn:1,
+					end:function(){
+						table.reload("test")
+					},
+					success:function(layero,index,that){
+						let body=layer.getChildFrame('body',index);
+						body.find('#id').val(obj.data.id);
+						body.find('#spotName').val(obj.data.spotName);
+						body.find('#spotAddress').val(obj.data.spotAddress);
+						body.find('#spotInfo').val(obj.data.spotInfo);
+						body.find('#mapInfo').val(obj.data.mapInfo);
+						body.find('#startTime').val(obj.data.startTime);
+						body.find('#endTime').val(obj.data.endTime);
+						body.find('#ticketPrice').val(obj.data.ticketPrice);
+						body.find('#ticketNum').val(obj.data.ticketNum);
+						body.find('#soptState').val(obj.data.soptState);
+						body.find('#spotImg')[0].src=obj.data.spotImgUrl;
+						body.find('#spotImgUrl').val(obj.data.spotImgUrl);
+					}
+				});
+			}else {
+				layer.open({
+					title:"景点详情",
+					type:2,
+					content:"/spotDetailPage?soptState="+obj.data.soptState,
+					area:['1000px','650px'],
+					closeBtn:1,
+					end:function(){
+						table.reload("test")
+					},
+					success:function(layero,index,that){
+						let body=layer.getChildFrame('body',index);
+						body.find('#id').val(obj.data.id);
+						body.find('#spotName').val(obj.data.spotName);
+						body.find('#spotAddress').val(obj.data.spotAddress);
+						body.find('#spotInfo').val(obj.data.spotInfo);
+						body.find('#startTime').val(obj.data.startTime);
+						body.find('#endTime').val(obj.data.endTime);
+						body.find('#ticketPrice').val(obj.data.ticketPrice);
+						body.find('#soptState').val(obj.data.soptState);
+						body.find('#spotImg')[0].src=obj.data.spotImgUrl;
+						body.find('#spotImgUrl').val(obj.data.spotImgUrl);
+					}
+				});
+			}
+		});
+		//调用对象中的函数进行表格生成
+		table.render({
+			elem:"#test",
+			url:"http://localhost:8086/spots/search",
+			page: {
+				limit:10,
+				prev:"上一页",
+				next:"下一页",
+				groups:6
+			},
+			request:{
+				pageName:'page',
+				limitName:'size'
+			},
+
+			parseData:function(res){
+				//console.log(res)
+				return{
+					"code": res.code, // 解析数据列表
+					"msg": res.message, // 解析提示文本
+					"count": res.data.total, // 解析数据长度
+					"data": res.data.list// 解析数据长度
+				}
+			},
+
+			toolbar:`
+					<div>
+						<button type="button" lay-event="deleSpot"  class="layui-btn  layui-bg-red">批量删除景点</button>
+						<button type="button" lay-event="addSpot" class="layui-btn  layui-bg-blue">添加景点</button>
+					</div>
+
+					`,
+			cols:[[
+				{type:'checkbox'},
+				{
+					title:"景点序号",
+					field:"id"
+				},
+				{
+					title:"景点名",
+					field:"spotName"
+				},
+				{
+					title:"景点地址",
+					field:"spotAddress"
+				},
+				{
+					title:"开放时间",
+					field:"startTime"
+				},
+				{
+					title:"关闭时间",
+					field:"endTime"
+				},
+				{
+					title:"门票",
+					field:"ticketPrice"
+				},
+				{
+					title: "景点图片",
+					templet:function (d) {
+						return "<div style='align-content: center;.layui-table-cell;.layui-table img'><img src='"+d.spotImgUrl+"'></div>";
+					}
+				},
+				{
+					title:"景点状态",
+					templet:function (d) {
+						return d.soptState==0?'<span class="layui-badge layui-bg-red">未开放</span>':'<span class="layui-badge layui-bg-green" >已开放</span>'
+					}
+				},
+				{
+					title:"操作",
+					width:300,
+					templet:function(d){
+						let s='<button type="button" lay-event="edit" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-edit"></i> 更新</button>'
+						s+='<button type="button" lay-event="del" class="layui-btn layui-btn-sm layui-bg-red"><i class="layui-icon layui-icon-clear"></i> 删除</button>'
+						s+='<button type="button" lay-event="detail" class="layui-btn layui-btn-sm layui-bg-green"><i class="layui-icon layui-icon-list"></i> 详情</button>'
+						return s;
+					},
+				}
+			]],
+
+			done: function (res, curr, count) {
+				hoverOpenImg();//显示大图
+				$('table tr').on('click', function () {
+					$('table tr').css('background', '');
+					$(this).css('background', '<%=PropKit.use("config.properties").get("table_color")%>');
+				});
+			}
+		});
+		//鼠标移到图片上显示大图
+		function hoverOpenImg() {
+			var img_show = null; // tips提示
+			$('td img').hover(function () {
+				var kd = $(this).width();
+				kd1 = kd * 6;          	//图片放大倍数
+				kd2 = kd * 5 + 100;     //图片放大倍数
+				var img = "<img class='img_msg' src='" + $(this).attr('src') + "' style='width:" + kd1 + "px;'  margin=0px padding=0px/>";
+				img_show = layer.tips(img, this, {
+					tips: [2, 'rgba(41,41,41,.0)']
+					, area: [kd2 + 'px']
+				});
+			}, function () {
+				layer.close(img_show);
+			});
+			$('td img').attr('style', 'max-width:70px;');
+		}
+
+	});
+</script>
+<script>
+	layui.use(function(){
+		var laydate = layui.laydate;
+		var util = layui.util;
+
+		// 日期时间范围
+		laydate.render({
+			elem: "#ID-laydate-shortcut-range-datetime",
+			type: "datetime",
+			range: true,
+			shortcuts: [
+				{
+					text: "上个月",
+					value: function(){
+						var date = new Date();
+						var year = date.getFullYear();
+						var month = date.getMonth();
+						return [
+							new Date(year, month - 1, 1),
+							new Date(year, month, 0, 23, 59, 59)
+						];
+					}
+				},
+				{
+					text: "这个月",
+					value: function(){
+						var date = new Date();
+						var year = date.getFullYear();
+						var month = date.getMonth();
+						return [
+							new Date(year, month, 1),
+							new Date(year, month + 1, 0, 23, 59, 59)
+						];
+					}
+				},
+				{
+					text: "下个月",
+					value: function(){
+						var date = new Date();
+						var year = date.getFullYear();
+						var month = date.getMonth();
+						return [
+							new Date(year, month + 1, 1),
+							new Date(year, month + 2, 0, 23, 59, 59)
+						];
+					}
+				}
+			]
+		});
+	});
+</script>
+
+</body>
+</html>

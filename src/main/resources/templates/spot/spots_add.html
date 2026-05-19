@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加景点信息</title>
+		<link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+		<link href="../../static/kindeditor/themes/default/default.css" rel="stylesheet" th:href="@{/kindeditor/themes/default/default.css}"/>
+
+	</head>
+	<body>
+		<div class="layui-container" style="margin-top:40px;">
+			<div class="layui-row">
+				<div class="layui-col-md8 layui-col-md-offset2">
+					<form class="layui-form layui-form-pane" >
+						<div class="layui-form-item">
+						  <label class="layui-form-label">景点名称</label>
+						  <div class="layui-input-inline">
+						    <input style="width: 600px" type="text" name="spotName" autocomplete="off" placeholder="请输入景点名称" lay-verify="required" class="layui-input">
+						  </div>
+						</div>
+						<div class="layui-form-item">
+						  <label class="layui-form-label">景点地址</label>
+						  <div class="layui-input-inline">
+						    <input style="width: 600px" type="text" name="spotAddress" autocomplete="off" placeholder="请输入景点地址" lay-verify="required" class="layui-input">
+						  </div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">景点简介</label>
+							<div class="layui-input-block">
+								<div id="editor" ></div>
+								<textarea id="spotInfo" name="spotInfo" style="width: 500px;height: 600px;display: none"></textarea>
+							</div>
+						</div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">开放时间</label>
+						  <div class="layui-input-inline">
+							  <input style="width: 600px" type="text" name="startTime" class="layui-input" id="ID-laydate-type-datetime-1" placeholder="选择开放时间">
+						  </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">关闭时间</label>
+						  <div class="layui-input-inline">
+							  <input style="width: 600px" type="text" name="endTime" class="layui-input" id="ID-laydate-type-datetime-2" placeholder="选择关闭时间">
+						  </div>
+					  </div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">门票价格</label>
+							<div class="layui-input-inline">
+								<input style="width: 600px" type="text" name="ticketPrice" autocomplete="off" placeholder="请输入门票价格" lay-verify="required" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">门票数量</label>
+							<div class="layui-input-inline">
+								<input style="width: 600px" type="text" name="ticketNum" autocomplete="off" placeholder="请输入门票数量" lay-verify="required" class="layui-input">
+							</div>
+						</div>
+					  <div class="layui-form-item">
+						<label class="layui-form-label">景点状态</label>
+						<div class="layui-input-inline" id="soptState">
+							<input type="radio" name="soptState" value="1" title="已开放" checked>
+							<input type="radio" name="soptState" value="0" title="未开放" >
+						</div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">景点图片</label>
+					    <div class="layui-input-block">
+							<div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+								<i  class="layui-icon layui-icon-upload"></i>
+								<div style="width: 700px">点击上传，或将文件拖传到此处</div>
+								<div class="layui-hide" id="ID-upload-demo-preview">
+									<hr> <img src="" alt="上传成功后渲染" style="max-width: 100%;">
+								</div>
+							</div>
+						</div>
+					    <!--隐藏域-->
+					    <input type="hidden" name="spotImgUrl" id="spotImgUrl"/>
+					  </div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">景点地图</label>
+							<div id="editor2" ></div>
+							<div class="layui-input-block">
+								<textarea id="mapInfo" name="spotInfo" style="width: 500px;height: 600px;display: none"></textarea>
+							</div>
+						</div>
+
+					  <div class="layui-form-item">
+					    <button class="layui-btn" lay-submit lay-filter="add">添加</button>
+					    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+		<script src="../../static/kindeditor/kindeditor-all-min.js" th:src="@{/kindeditor/kindeditor-all-min.js}"></script>
+		<script src="../../static/kindeditor/lang/zh-CN.js" th:src="@{/kindeditor/lang/zh-CN.js}"></script>
+		<script>
+			//初始化kindEditor编辑器
+			var editor;
+			//kindEditor图片上传
+			KindEditor.ready(function (K){
+				//id选择器
+				editor = K.create('#spotInfo',{
+					//指定上传文件参数名称和<input name="file">属性一样
+					filePostName : "file",
+					//指定上传文件请求的url
+					uploadJson : 'http://localhost:8086/file/kindEditorUpload',//上传的后台地址
+					//上传类型，分别为image、flash、media、file
+					dir : "image",
+					//是否运行浏览服务器已上传文件，默认是false
+					allowFileManger:true
+				});
+			});
+
+			var editor2;
+			//kindEditor图片上传
+			KindEditor.ready(function (K){
+				//id选择器
+				editor2 = K.create('#mapInfo',{
+					//指定上传文件参数名称和<input name="file">属性一样
+					filePostName : "file",
+					//指定上传文件请求的url
+					uploadJson : 'http://localhost:8086/file/kindEditorUpload',//上传的后台地址
+					//上传类型，分别为image、flash、media、file
+					dir : "image",
+					//是否运行浏览服务器已上传文件，默认是false
+					allowFileManger:true
+				});
+			});
+
+			layui.use(function(){
+				let laydate=layui.laydate;
+				let $ = layui.$;
+				let layer=layui.layer;
+				let form=layui.form;
+				let upload=layui.upload;
+
+				// 日期时间选择器 - 日期和时间选择器同时显示（全面板）
+				laydate.render({
+					elem: '#ID-laydate-type-datetime-1',
+					type: 'datetime',
+					fullPanel: true // 2.8+
+				});
+				laydate.render({
+					elem: '#ID-laydate-type-datetime-2',
+					type: 'datetime',
+					fullPanel: true // 2.8+
+				});
+
+				//图片上传
+				upload.render({
+					elem:'#ID-upload-demo-drag',
+					url: 'http://localhost:8086/file/upload',
+					done:function (res) {
+						console.log(res);
+						//将图片的服务器地址设置到对应的隐藏域中
+						$("#spotImgUrl").val(res.data);
+
+						layer.msg('上传成功');
+						$('#ID-upload-demo-preview').removeClass('layui-hide')
+								.find('img').attr('src',res.data);
+					}
+				});
+
+				//表单提交事件
+				form.on("submit(add)",function(data){
+					let field=data.field;
+					data.field.spotInfo=editor.html();
+					data.field.mapInfo=editor2.html();
+					//AJAX向后端发送请求
+					$.ajax({
+						type:"post",
+						url:"http://localhost:8086/spots",
+						data:JSON.stringify(field),
+						contentType:'application/json',
+						dataType:"json",
+						success:function(d){
+							console.log(d)
+							if(d.code==0){
+								//关闭弹出层
+								let index=parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+							}else{
+								layer.msg(d.msg);
+							}
+						}
+					});
+					return false;
+				});
+				
+				
+			})
+
+		</script>
+	</body>
+
+</html>

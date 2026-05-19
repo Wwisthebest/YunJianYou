@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/cloud.css" th:href="@{/css/cloud/cloud.css}">
+    <!-- 导入layui -->
+    <link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <title>云间游-管理员登录</title>
+    <style>
+        body{
+            background-color: #212221;
+        }
+
+        .header{
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            z-index: 0;
+            height: 100%;
+        }
+
+        .login{
+            margin: 120px auto 0 auto;
+            min-height: 380px;
+            max-width: 330px;
+            padding: 40px;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            width: 330px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -165px;
+            border: 0px;
+        }
+
+        .login a.logo{
+            display: block;
+            height: 58px;
+            width: 167px;
+            margin: 0 auto 30px auto;
+            background-size: 167px 42px;
+        }
+
+        .login .message{
+            width: auto;
+            position: relative;
+            text-align: center;
+            color: #fff;
+            font-size: 21px;
+        }
+
+        .login input[type=text],
+        .login input[type=file],
+        .login input[type=password],
+        .login input[type=email],select{
+            border: 1px solid #DCDEE0;
+            vertical-align: 3px;
+            margin-bottom: 10px;
+            padding: 0px 16px;
+            font-size: 14px;
+            color:#555555;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .login input[type=text]:focus,
+        .login input[type=file]:focus,
+        .login input[type=password]:focus,
+        .login input[type=email]:focus, select:focus {
+            border: 1px solid #27A9E3;
+        }
+
+        login input[type=submit]
+        login input[type=button] {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 12px 24px;
+            margin: 0px;
+            font-size: 18px;
+            line-height: 24px;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            color: #ffffff;
+            background-color: #393d47;
+            border-radius: 3px;
+            border: none;
+            -webkit-appearance: none;
+            outline: none;
+            width: 100%;
+        }
+
+        login hr.hr15 {
+            height: 15px;
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+        login hr.hr20 {
+            height: 20px;
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="htmleaf-container">
+    <div class="sky">
+        <div class="clouds_one"></div>
+        <div class="clouds_two"></div>
+        <div class="clouds_three"></div>
+    </div>
+    <div class="header" style="">
+        <div class="canvaszz" style=""></div>
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="login">
+        <form class="layui-form" method="post" action="/adminUser_login">
+            <div class="layui-form-item">
+                <div class="message" style="color: #0c4128">管理员登录</div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-black">
+                    <input type="text" id="aName" name="aName" required="required" lay-verify="aName" placeholder="请输入管理员账号" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-black">
+                    <input type="password" id="aPassword" name="aPassword" required="required" lay-verify="aPassword" placeholder="请输入管理员密码" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-black">
+                    <input type="text" id="code" name="aUserCode" required="required" lay-verify="aUserCode" placeholder="请输入验证码" autocomplete="off" class="layui-input"/>
+                    <img src="/createImage" id="captcha" style="cursor: pointer;" onclick="this.src=this.src+'?d='+Math.random();" title="点击刷新" alt="captcha">
+                </div>
+            </div>
+            <div><p th:text="${message}" style="color: red"></p></div>
+            <button class="layui-btn" type="submit" style="width:100%; background-color: #2ec8e6">登录</button>
+        </form>
+    </div>
+    <div class="layui-header header" style="color: #FFFFFF">
+        <h1>云间游-旅游景点信息管理系统</h1>
+    </div>
+
+
+</div>
+
+    <!--导入layui js文件-->
+    <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+</body>
+</html>

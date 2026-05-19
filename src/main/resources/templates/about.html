@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Responsive Html5 Templates">
+    <meta name="author" content="">
+	<link rel="icon" href="../static/images/icon.png" th:href="@{/images/icon.png}">
+
+    <title>关于云间游</title>
+	<!-- 导入layui -->
+	<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+	<!-- Bootstrap CSS-->
+	<link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="../static/css/about.css" th:href="@{/css/about.css}"/>
+	<link rel="stylesheet" type="text/css" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+	<!-- Custom Fonts -->
+	<link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+
+</head>
+<body>
+
+	<!--导航栏-->
+	<nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-transparent">
+		<div class="container">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<img src="../static/images/logo.png" th:src="@{/images/logo.png}" style="width: 190px; height:50px;float: left;" >
+				<ul class="nav navbar-nav navbar-right">
+					<!--TODO 导航栏功能跳转按钮，后期添加-->
+					<li><a th:href="@{/index}"><i class="layui-icon layui-icon-home" style="font-size: 18px" ></i> 首页</a></li>
+					<li><a th:if="${session.user!=null}" href="/user_info" th:text="'欢迎你：'+${session.user.uName}">
+						<i class="layui-icon layui-icon-user" style="font-size: 18px" ></i>
+					</a><a th:if="${session.user==null}" href="/login"><i class="layui-icon layui-icon-user" style="font-size: 18px" ></i> 登录 | 注册</a></li>
+					<li><a th:if="${session.user!=null}" href="/logout">退出</a></li>
+					<li><a th:href="@{/about}"><i class="layui-icon layui-icon-tips" style="font-size: 18px" ></i> 关于云间游</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- 头部 -->
+	<header class="text-center" name="home">
+		<div class="intro-text">
+			<h1 class="wow fadeInDown">关于 <strong><span class="color">云间游</span></strong></h1>
+		</div>
+	</header>
+	
+	<!-- /////////////////////////////////////////Content -->
+	<div id="page-content" class="sub-page">
+		<div id="main-content">
+			<article>
+				<div class="container">
+					
+					<div class="art-content">
+						<h1 class="entry-title">云间游简介</h1>
+						<div class="row">
+						<div class="col-md-4">
+							<img src="../static/images/show.png" class="img-responsive"  th:src="@{/images/show.png}">
+						</div>
+						<div class="col-md-8">
+							<br>
+							<p style="font-size: 20px;font-weight: 400">云间游是中国知名的旅游资讯网站，致力于为旅客提供一站式全国旅行服务，包含票务预订、旅游度假预订服务等，服务范围覆盖旅行前、行中、行后、及目的地服务等旅游全流程。
+								通过APP、网站和24/7客户服务中心组成的交易网络，实现用户与产品的完美连接，每年为数亿旅客提供旅行服务。</p>
+							<br>
+							<p style="font-size: 20px;font-weight: 400">云间游积极承担社会责任，将社会价值与ESG可持续发展结合，推动企业承担更大的社会责任，也助力合作伙伴坚持可持续旅行。</p>
+							<br>
+							<p style="font-size: 20px;font-weight: 400">使命：追求完美旅程，共建美好世界</p>
+							<br>
+							<p style="font-size: 20px;font-weight: 400">愿景：成为最信赖的线上旅行品牌，致力为旅行者提供高性价比的完美旅程。</p>
+
+						</div>
+					</div>
+						<p style="margin-top: 20px;font-size: 16px">云间游坚信着大胆创新，集思广益，打样试错，使命必达。复杂的事情简单做，简单的事情重复做，重复做的事情创造性的做。</p>
+						<p style="margin-top: 20px;font-size: 16px;text-align: center">变化是一切机会的来源，拥抱变化实现梦想</p>
+						<blockquote><p>ESG可持续发展</p></blockquote>
+						<br><img  src="../static/images/ESG.jpg" th:src="@{/images/ESG.jpg}">
+
+						<p style="font-size:16px"><br>ESG是指环境(Environment)、社会(Social)和公司治理(Governance)三个方面,这些是衡量一家公司可持续发展能力的重要指标。</p>
+						<br>
+						<h2>环境---Environment</h2>
+						<br>
+						<p style="font-size:16px">包括气候变化、碳排放、能源效率、水资源管理等方面的表现。云间游会采取措施减少对环境的负面影响,提高资源利用效率,推动绿色发展。</p>
+						<br>
+						<h2>社会---Social</h2>
+						<br>
+						<p style="font-size:16px">包括员工权益保护、职业健康安全、供应链管理、产品质量等方面。 云间游十分注重员工福祉,维护消费者权益,履行社会责任。</p>
+						<br>
+						<h2>公司治理---Governance</h2>
+						<br>
+						<p style="font-size:16px">包括公司的领导层结构、董事会独立性、反腐败机制等方面。云间游有着良好的公司治理，高水平的决策效率,强烈和责任意识和极高企业的透明度。</p>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+
+	<!--页脚 -->
+	<footer>
+		<div id="footer">
+			<div class="container">
+				<br style="color: deepskyblue;",>Copyright © 2023 丽江文化旅游学院   </br>
+				<br style="color: deepskyblue;">All Rights Reserved & ICP Licensed</br>
+				<br style="color: deepskyblue;">onlinefun.fun 滇ICP备:2023002014号 </br>
+			</div>
+		</div>
+	</footer>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="../static/js/jquery-2.1.1.js" th:src="@{/js/jquery-2.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../static/js/SmoothScroll.js" th:src="@{/js/SmoothScroll.js}"></script>
+<script type="text/javascript" src="../static/js/wow.min.js" th:src="@{/js/wow.min.js}"></script>
+<script type="text/javascript" src="../static/js/jquery.isotope.js" th:src="@{/js/jquery.isotope.js}"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<!--导入layui js文件-->
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+</body>
+</html>

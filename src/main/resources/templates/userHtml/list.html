@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户列表页</title>
+		<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+		<style>
+			/* 自定义样式 */
+			body, html {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				font-family: Arial, sans-serif;
+			}
+			.nav-item a {
+				display: block;
+				padding: 10px;
+				color: #fff;
+				text-decoration: none;
+				transition: background-color 0.3s;
+				border-left: 5px solid transparent;
+			}
+			.nav-item a:hover {
+				background-color: #5FB878;
+				border-left-color: #FF5722;
+			}
+			.header {
+				background-color: #393D49;
+				color: #fff;
+				height: 50px;
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				line-height: 50px;
+				padding-left: 10px;
+				z-index: 1000;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			}
+			.layui-table-cell{
+				text-align:center;
+				height: auto;
+				white-space: normal;
+			}
+			.layui-table img{
+				max-width:300px
+			}
+		</style>
+	</head>
+	<body>
+<!--	<div class="header">-->
+<!--		<div style="font-size: 24px; font-weight: bold;">云间游</div>-->
+<!--	</div>-->
+<!--	<h1 style="text-align: center;color: aqua;margin-top: 20px;margin-bottom: 20px;">用户列表</h1>-->
+
+<!--		<form class="layui-form layui-row layui-col-space5">-->
+<!--			<div class="layui-col-md2">-->
+<!--				<div class="layui-input-wrap">-->
+<!--					<div class="layui-input-prefix">-->
+<!--						<i class="layui-icon layui-icon-username"></i>-->
+<!--					</div>-->
+<!--					<input type="text" name="A" value="" placeholder="Field A" class="layui-input" lay-affix="clear">-->
+<!--				</div>-->
+<!--			</div>-->
+
+<!--			<div class="layui-col-md2" >-->
+<!--				<button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>-->
+<!--				<button type="reset" class="layui-btn layui-btn-primary">清空</button>-->
+<!--			</div>-->
+<!--		</form>-->
+
+		<!-- 根据后端数据生成数据表格 -->
+		<table class="layui-hide" id="test" lay-filter="test"></table>
+
+		<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+		<script th:inline="none">
+			layui.use(function(){
+				
+				//获取table组件的对象
+				let table = layui.table;
+				let $=layui.$;
+				let layer=layui.layer;
+				//头部工具栏事件
+				table.on('toolbar(test)',function(obj){
+					console.log("顶部工具栏事件被触发了...",obj)
+					let event =obj.event;
+					if(event=='addUser'){
+						layer.open({
+							title:"添加用户",
+							type:2,
+							content:"/userAddPage",
+							area:['500px','500px'],
+							closeBtn:1,
+							end:function(){
+								table.reload("test")
+							}
+						});
+					}else if(event=='deleUser'){
+						let id=obj.config.id;
+						let checkStatus=table.checkStatus(id);
+						let list =checkStatus.data;
+						if(list && list.length==0){
+							layer.msg("没有选择要删除的数据");
+						}else{
+							layer.confirm('确认删除?',{btn:['确定','取消']},function(index){
+								let arr=[];
+								for(let i=0;i<list.length;i++){
+									arr.push(list[i].id);
+								}
+								$.ajax({
+									type:"post",
+									url:"http://localhost:8086/user/deleteAllSelectUser",
+									data:JSON.stringify(arr),
+									contentType:'application/json',
+									dataType:"json",
+									success:function(d){
+										if(d.code==0){
+											table.reload("test")
+										}else{
+											layer.msg(d.msg);
+										}
+									}
+								});
+								layer.close(index);
+							});
+						}
+					}
+				});
+
+
+				table.on('tool(test)',function(obj){
+					console.log(obj);
+					let event=obj.event;
+					if(event=='del'){
+						layer.confirm('确定删除?',{btn:['确定','取消']},function(index){
+							//确定删除
+							let id =obj.data.id;
+							//AJAX调用
+							$.ajax({
+								type:"DELETE",
+								url:"http://localhost:8086/user/deleteUserById",
+								data:{ id: obj.data.id },
+								success:function(d){
+									if(d.code==0){
+										table.reload("test")
+									}else{
+										layer.msg(d.msg);
+									}
+								}
+							});
+							//关闭提示框
+							layer.close(index);
+						});
+
+
+					}else if(event=='edit'){
+						layer.open({
+							title:"更新用户",
+							type:2,
+							content:"/userEditPage?isState="+obj.data.isState+"&id="+obj.data.id+"&sex="+obj.data.sex,
+							area:['500px','500px'],
+							closeBtn:1,
+							end:function(){
+								table.reload("test")
+							},
+							success:function(layero,index,that){
+								let body=layer.getChildFrame('body',index);
+								body.find('#id').val(obj.data.id);
+								body.find('#uName').val(obj.data.uName);
+								body.find('#uNickName').val(obj.data.uNickName);
+								body.find('#uIdNum').val(obj.data.uIdNum);
+								body.find('#phone').val(obj.data.phone);
+								body.find('#email').val(obj.data.email);
+								body.find('#isState').val(obj.data.isState);
+								body.find('#sex').val(obj.data.sex);
+								body.find('#uPassword').val(obj.data.uPassword);
+								body.find('#idState').val(obj.data.isState);
+								body.find('#picId')[0].src=obj.data.userUrl;
+								body.find('#userAddress').val(obj.data.userAddress);
+								body.find('#userUrl').val(obj.data.userUrl);
+							}
+						});
+					}
+				});
+				//调用对象中的函数进行表格生成
+				table.render({
+					elem:"#test",
+					url:"http://localhost:8086/user/search",
+					page: {
+						limit:5,
+						prev:"上一页",
+						next:"下一页",
+						groups:6
+					},
+					request:{
+						pageName:'pageNo',
+						limitName:'pageSize'
+					},
+
+					parseData:function(res){
+						//console.log(res)
+						return{
+							"code": res.code, // 解析数据列表
+							"msg": res.message, // 解析提示文本
+							"count": res.data.total, // 解析数据长度
+							"data": res.data.list// 解析数据长度
+						}
+					},
+					toolbar:`
+						<div>
+							<button type="button" lay-event="deleUser"  class="layui-btn layui-btn-sm layui-bg-red">批量删除</button>
+							<button type="button" lay-event="addUser" class="layui-btn layui-btn-sm layui-bg-blue">添加</button>
+						</div>
+					`,
+					cols:[[
+						{type:'checkbox',fixed:'left'},
+						{
+							title:"用户id",
+							field:"id",
+							sort:true
+						},
+						{
+							title:"真实姓名",
+							field:"uName"
+						},
+						{
+							title:"昵称",
+							field:"uNickName"
+						},
+						{
+							title:"身份证号",
+							field:"uIdNum"
+						},
+						{
+							title:"注册手机号",
+							field:"phone"
+						},
+						{
+							title:"注册邮箱",
+							field:"email"
+						},
+						{
+							title: "头像",
+							templet:function (d) {
+								return "<div style='.layui-table img'><img src='"+d.userUrl+"'></div>";
+							}
+						},
+						{
+							title:"账号使用状态",
+							templet:function (d) {
+								return d.isState==0?'<span class="layui-badge layui-bg-green">离线</span>':'<span class="layui-badge layui-bg-orange">在线</span>'
+							}
+						},
+						{
+							title:"性别",
+							templet:function (d) {
+								return d.sex==0?'女':'男'
+							},
+							sort: true
+						},
+						{
+							title:"密码",
+							field:"uPassword"
+						},
+						{
+							title:"操作",
+							templet:function(d){
+								let s='<button type="button" lay-event="edit" class="layui-btn layui-btn-xs layui-btn-normal">更新</button>'
+								s+='<button type="button" lay-event="del" class="layui-btn layui-btn-xs layui-bg-red">删除</button>'
+								return s;
+							}
+						}
+					]],
+					done: function (res, curr, count) {
+						hoverOpenImg();//显示大图
+						$('table tr').on('click', function () {
+							$('table tr').css('background', '');
+							$(this).css('background', '<%=PropKit.use("config.properties").get("table_color")%>');
+						});
+					}
+				});
+				//显示图片
+				function hoverOpenImg() {
+					var img_show = null; // tips提示
+					$('td img').hover(function () {
+						var kd = $(this).width();
+						kd1 = kd * 6;          	//图片放大倍数
+						kd2 = kd * 5 + 100;     //图片放大倍数
+						var img = "<img class='img_msg' src='" + $(this).attr('src') + "' style='width:" + kd1 + "px;'  margin=0px padding=0px/>";
+						img_show = layer.tips(img, this, {
+							tips: [2, 'rgba(41,41,41,.0)']
+							, area: [kd2 + 'px']
+						});
+					}, function () {
+						layer.close(img_show);
+					});
+					$('td img').attr('style', 'max-width:70px;display:block!important');
+				}
+			});
+		</script>
+	</body>
+</html>

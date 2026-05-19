@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="description">
+    <meta content="Mark Otto, Jacob Thornton, and Bootstrap contributors" name="author">
+    <meta content="Hugo 0.88.1" name="generator">
+    <title>修改信息</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/dashboard.css" rel="stylesheet" th:href="@{/assets/css/dashboard.css}">
+    <!--导入layui样式-->
+    <link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <!-- Custom CSS -->
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="../../static/css/animate.min.css" rel="stylesheet" th:href="@{/css/animate.min.css}" type="text/css"/>
+    <!-- Custom Fonts -->
+    <link href="../../static/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"
+          type="text/css"/>
+
+    <!--
+      css引入3种方式：
+      1.行内样式
+      2.内部样式：在head标签中写style
+      3.外部样式：使用link引入
+    -->
+
+</head>
+<body>
+<!-- /////////////////////////////////////////Navigation -->
+<!--导航栏-->
+<nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-transparent">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <img src="../static/images/logo.png" th:src="@{/images/logo.png}" style="width: 190px; height:50px;float: left;" >
+            <ul class="nav navbar-nav navbar-right">
+                <!--TODO 导航栏功能跳转按钮，后期添加-->
+                <li><a th:href="@{/index}"><i class="layui-icon layui-icon-home" style="font-size: 18px" ></i> 首页</a></li>
+                <li><a th:if="${session.user!=null}" href="/个人中心（目前没写）" th:text="'欢迎你：'+${session.user.uName}">
+                    <i class="layui-icon layui-icon-user" style="font-size: 18px" ></i>
+                </a><a th:if="${session.user==null}" href="/login"><i class="layui-icon layui-icon-user" style="font-size: 18px" ></i> 登录 | 注册</a></li>
+                <li><a th:if="${session.user!=null}" href="/logout">退出</a></li>
+                <li><a th:href="@{/collect/list}"><i class="layui-icon layui-icon-home" style="font-size: 18px" ></i> 收藏</a></li>
+                <li><a th:href="@{/}"><i class="layui-icon layui-icon-tips" style="font-size: 18px" ></i> 关于云间游</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="text-center" name="home">
+    <div class="intro-text">
+        <h1 class="wow fadeInDown">欢迎来到 <strong><span class="color">云间游</span></strong></h1>
+        <p class="wow fadeInDown">你最贴心的旅游景点推荐网站</p>
+        <!--TODO 购票页面-->
+        <a th:href="@{/spotsWeb/page_list}" class="btn btn-default btn-lg page-scroll wow fadeInUp" data-wow-delay="200ms" href="#">前往购票</a>
+    </div>
+
+</header>
+<!-- ////////////Content Box 01 -->
+<div class="index-page" id="page-content">
+    <section class="box-content box-style text-center" id="">
+        <div class="container">
+            <div class="row heading wow fadeInDown">
+                <div class="col-lg-12">
+                    <h2>热门城市 <strong>收藏</strong></h2>
+                    <br><br>
+                    <div class="clearfix"></div>
+                    <p>云间游收录了全国各地的热门旅游景点，在云间游，来去自如，似游云间</p>
+                </div>
+            </div>
+
+
+            <main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" role="main">
+                <form action="#" th:action="@{/collect/updateCollect}" method="post" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+                    <ul style="list-style: none">
+                        <li>
+                            <label>收藏id:</label>
+                            <input name="fId" readonly="readonly" th:value="${collect.fId}" type="text"/>
+                        </li>
+                        <li>
+                            <label>景点名称:</label>
+                            <input name="ssName" th:value="${collect.ssName}" type="text"/>
+                        </li>
+
+                        <li>
+                            <label>景点id:</label>
+                            <input name="ssId" th:value="${collect.ssId}" type="text"/>
+                        </li>
+                        <li>
+                            <label>用户id:</label>
+                            <input name="uId" th:value="${collect.uId}" type="text"/>
+                        </li>
+                        <li>
+                            <label>单价:</label>
+                            <input name="ssPrice" th:value="${collect.ssPrice}" type="text"/>
+                        </li>
+
+                        <li>
+                            <input class="btn btn-sm btn-info" type="submit" value="保存"/>
+                        </li>
+                    </ul>
+                </form>
+            </main>
+
+        </div>
+</section>
+</div>
+
+
+<script src="../../static/js/feather.min.js" th:src="@{/js/feather.min.js}"></script>
+<script src="../../static/js/jquery-2.1.1.js" th:src="@{/js/jquery-2.1.1.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../static/js/feather.min.js" th:src="@{/js/feather.min.js}"></script>
+<script src="../static/lay-ui/lay-ui.js" th:src="@{/lay-ui/lay-ui.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+<!--页脚 -->
+<footer>
+    <div id="footer">
+        <div class="container">
+            <br , style="color: deepskyblue;">Copyright © 2023 丽江文化旅游学院   </br>
+            <br style="color: deepskyblue;">All Rights Reserved & ICP Licensed</br>
+            <br style="color: deepskyblue;">onlinefun.fun 滇ICP备:2023002014号 </br>
+        </div>
+    </div>
+</footer>
+<style>
+    .page-item {
+        margin: 0 5px;
+    }
+
+    .page-link {
+        border: 1px solid blue;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+</style>
+</body>
+</html>

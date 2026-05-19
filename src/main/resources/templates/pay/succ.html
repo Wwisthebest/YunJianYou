@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+    body{
+    background: linear-gradient(to right, #b6af87, #a4bbc1)
+    }
+
+    </style>
+    <!-- 导入layui -->
+    <link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+</head>
+<body>
+    <p style="text-align: center; font-size: 24px;margin-top: 200px">付款成功！云间游期待与您再会</p>
+    <div class="layui-btn-container">
+        <a th:href="@{/spotsWeb/page_list}"><button type="button" class="layui-btn layui-btn-lg" style="margin-left: 800px;margin-top: 100px"> 返回购票</button></a>
+
+    </div>
+
+    <!--导入layui js文件-->
+    <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+</body>
+</html>

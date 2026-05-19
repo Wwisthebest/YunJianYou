@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Responsive Html5 Templates">
+    <meta name="author" content="">
+    <link rel="icon" href="../static/images/icon.png" th:href="@{/images/icon.png}">
+    <title>云间游</title>
+
+	<!-- 导入layui -->
+	<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <!-- Bootstrap CSS-->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+	<link rel="stylesheet" type="text/css" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+	<!-- Custom Fonts -->
+    <link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+
+</head>
+<body>
+	<!--导航栏-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-transparent">
+		<div class="container">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <img src="../static/images/logo.png" th:src="@{/images/logo.png}" style="width: 190px; height:50px;float: left;" >
+			  <ul class="nav navbar-nav navbar-right">
+				  <!--TODO 导航栏功能跳转按钮，后期添加-->
+				<li><a th:href="@{/index}"><i class="layui-icon layui-icon-home" style="font-size: 18px" ></i> 首页</a></li>
+                <li><a th:if="${session.user!=null}" href="/user_info" th:text="'欢迎你：'+${session.user.uNickName}">
+                    <i class="layui-icon layui-icon-user" style="font-size: 18px" ></i>
+                    </a><a th:if="${session.user==null}" href="/login"><i class="layui-icon layui-icon-user" style="font-size: 18px" ></i> 登录 | 注册</a></li>
+<!--            <li><a th:if="${session.user!=null}" href="orderMng"><i class="layui-icon layui-icon-console" style="font-size: 18px" ></i>订单管理</a></li>-->
+                <li><a th:if="${session.user!=null}" href="/logout">退出</a></li>
+                <li><a th:href="@{/about}"><i class="layui-icon layui-icon-tips" style="font-size: 18px" ></i> 关于云间游</a></li>
+			  </ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<!-- 头部 -->
+	<header class="text-center" name="home">
+		<div class="intro-text">
+			<h1 class="wow fadeInDown">欢迎来到 <strong><span class="color">云间游</span></strong></h1>
+			<p class="wow fadeInDown" style="font-size: 33px">你最贴心的旅游景点推荐网站</p>
+			<!--TODO 购票页面-->
+			<a th:href="@{/spotsWeb/page_list}" class="btn btn-default btn-lg page-scroll wow fadeInUp" data-wow-delay="200ms">前往购票</a>
+
+		</div>
+	</header>
+
+	<!-- 内容 -->
+	<div id="page-content" class="index-page">
+
+		<section id="" class="box-content box-style text-center">
+			<div class="container">
+				<div class="row heading wow fadeInDown">
+					<div class="col-lg-12">
+						<h2>热门城市 <strong>景点推荐</strong></h2>
+						<br>
+					  <div class="clearfix"></div>
+					  <p style="font-size: 23px">云间游收录了全国各地的热门旅游景点，在云间游，来去自如，似游云间</p>
+					</div>
+				</div>
+				<div class="categories">
+				  <ul class="cat">
+					<li>
+						<ol class="type list-inline">
+							<!--TODO 欢迎页景点分类-->
+							<li><a href="#" data-filter="*" class="active">热点城市</a></li>
+                            <li><a href="#" data-filter=".yunnan">云南</a></li>
+							<li><a href="#" data-filter=".hebei">河北</a></li>
+							<li><a href="#" data-filter=".sichuan">四川</a></li>
+							<li><a href="#" data-filter=".neimeng">内蒙</a></li>
+						</ol>
+					</li>
+				  </ul>
+				  <div class="clearfix"></div>
+				</div>
+
+                <!--欢迎页景点展示-->
+                <div class="portfolio-items">
+
+                    <!--云南-->
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal1" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>玉龙雪山</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1n8-AaaAcAAPGhqBwp6g128.png" class="img-responsive" alt="Project Title"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal2" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>拉市海</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiAYIzBAAL8LKrZhGM896.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal3" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>蓝月谷</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiAaIIMAATgWT6D9dw331.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal4" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>丽江古城</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiAJjXnAAViMcdBmwc313.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal5" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>泸沽湖</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHmAPLCFAATRNFjFKr4730.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal6" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>木府</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHmAS7fOAATMgT_LAFM067.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal7" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>束河古镇</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHmAQv4aAARc3wc43Gc736.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 yunnan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#yunnanModal8" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                                <span>
+                                  <h2>云杉坪</h2>
+                                点击预览
+                                </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHmAFRjjAAPFlvrqEWk076.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--河北-->
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal1" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>古武当山</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHeAQ1nbAAQ5S6PF7EQ488.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal2" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>京娘湖</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHeAbHZ9AATfuF2E-j4168.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal3" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>开元寺</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHeAbQPjAAU9gG5NDtc086.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal4" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>滦州古城</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHeAbeJFAAOWSo5gqJI522.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal5" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>菩提岛</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHeAcjeOAALM2_TZ8Nk892.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal6" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>清东陵</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiAS9ccAAWBONmMFw0641.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal7" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>娲皇宫</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiACfUhAAV9TCIsgYM366.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 hebei">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="hover-bg"> <a href="#hebeiModal8" class="portfolio-link" data-toggle="modal">
+                                <div class="hover-text">
+                            <span>
+                              <h2>响堂山石窟</h2>
+                            点击预览
+                            </span>
+                                    <div class="clearfix"></div>
+                                    <i class="fa fa-plus"></i> </div>
+                                <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1oHiAeFcvAAWgU9oKLwA086.png}"> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--四川-->
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal1" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>八台山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAUxfcAAOmuOnuEqo216.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal2" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>巴山大峡谷</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAer1kAAYfynnofj4984.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal3" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>白龙峡</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMuADXf1AAPyMfmDdSE786.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal4" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>凤凰山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMuAY1yGAARSXmFG1tA498.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal5" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>华蓥山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMuAKwaKAAXEp0JpXX8188.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal6" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>梦田花海</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1puWAbgLTAASt1XMivO0170.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal7" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>五华山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMuARIbeAAR3DepvWpg840.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 sichuan">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#sichuanModal8" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>真佛山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMuAQuHWAARsU5L1ABY076.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+
+                    <!--内蒙-->
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal1" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>大青沟</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMmAVz6iAASJxJXrblE957.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal2" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>呼和浩特</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMmAF1RUAAM8V9ekiO8435.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal3" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>呼伦贝尔大草原</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMmAL8aFAAPwstyCwec572.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal4" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>可汗山</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAInH6AAUkKMURyWE041.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal5" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>库伦三大寺</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqASmsiAAStc-yB_Es092.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal6" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>满洲里</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAFuCbAAPOPpKzpxM200.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal7" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>孝庄园</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAaDyUAAOzLTKenfM170.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 neimeng">
+                        <div class="portfolio-item wow fadeInUp" data-wow-delay="200ms">
+                          <div class="hover-bg"> <a href="#neimengModal8" class="portfolio-link" data-toggle="modal">
+                            <div class="hover-text">
+                                <span>
+                                  <h2>银沙湾</h2>
+                                点击预览
+                                </span>
+                              <div class="clearfix"></div>
+                              <i class="fa fa-plus"></i> </div>
+                            <img class="img-responsive" alt="Project Title" th:src="@{http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ1pMqAYDCaAAOtR3QrJFY174.png}"> </a>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </section>
+	</div>
+	
+	<!--页脚 -->
+	<footer>
+		<div id="footer">
+			<div class="container">
+                <br style="color: deepskyblue;",>Copyright © 2023 丽江文化旅游学院   </br>
+                <br style="color: deepskyblue;">All Rights Reserved & ICP Licensed</br>
+                <br style="color: deepskyblue;">onlinefun.fun 滇ICP备:2023002014号 </br>
+			</div>
+		</div>
+	</footer>
+
+<!-- 欢迎页景点点击详情 -->
+<!--河北-->
+<div class="portfolio-modal modal fade" id="hebeiModal1" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-content">
+    <div class="close-modal" data-dismiss="modal">
+      <div class="lr">
+        <div class="rl"> </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="modal-body"> 
+            <!-- 景点细节 -->
+            <h2 >古武当山</h2>
+            <p class="item-intro" style="color: #1c424d;font-family: 'My1';">此身应在仙乡里，听取云烟一壑风</p>
+            <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZq5WeAX9bkAAo5uxmQnKA628.png" alt="">
+            <h4>古武当山为道教历史史山，位于河北省邯郸市武安市西北的太行山深处，距邯郸市70公里。山顶有一唐代古碑上有“古武当山”字样，经专家考证认定是久为国内道教界寻找的著名的北方武当山，其历史早于国内其他武当山，成为4A级旅游景点，国家地质公园。</h4>
+            <ul class="list-inline">
+              <hr>
+            </ul>
+            <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+            <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+            <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+            <a th:if="${session.user!=null}" href="/spotsWeb/detail/12" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl"> </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- 景点细节 -->
+                            <h2 >京娘湖</h2>
+                            <p class="item-intro" style="color: #1c424d;font-family: 'My1';">飞瀑清塘锦鲤游，乔林郁郁野花稠</p>
+                            <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtjg6AXYt0AA3vVLy5aEs381.png" alt="">
+                            <h4>京娘湖位于河北省邯郸市武安市西北部山区的口上村北，亦称口上水库。</h4>
+                            <h4> 距武安城30公里，距邯郸约60公里，位居太行山脉腹地。</h4>
+                            <h4>据史料记载，赵匡胤千里送京娘的故事便发生在这里。</h4>
+                            <ul class="list-inline">
+                                <hr>
+                            </ul>
+                            <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                            <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                            <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                            <a th:if="${session.user!=null}" href="/spotsWeb/detail/10" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="portfolio-modal modal fade" id="hebeiModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >开元寺</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">晨钟暮鼓惊醒世，梵语经声诵善哉。</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz6T6AW2-nAA048PX3DMs093.png" alt="">
+                        <h4>开元寺，位于河北省石家庄市正定县燕赵南大街109号。始建于东魏兴和二年，原名净观寺，是正定古城八大寺院之一。唐开元二十六年，改开元寺。开元寺寺内主要建筑为三门楼、天王殿、开元寺须弥塔、开元寺钟楼和法船殿遗址。主殿在后，开元寺钟楼、开元寺须弥塔于殿前左右对峙。开元寺主殿在后，楼、塔左右对峙的布局是唐代佛教寺院建筑布局的典型实例，在中国建筑史上占有重要地位。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/22" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >滦州古城</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">碧水滦河玉带流，京东载誉第一州</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz6k2AIFuNAAjrn17BZ0k047.png" alt="">
+                        <h4>滦州古城位于河北省唐山市滦州市古城街道，是三千年大河之畔的盛世古城，采撷群山壮丽构筑其骨，掬一捧滦河俊秀勾画其容。将26个民族独特风情织入古老的明清建筑，将千年北方文化融汇进这座梦想乐园。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/23" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >菩提岛</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">谁人远道请菩提，信众趋之乐不疲</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz6tyAefuwAAb1H3wDr1U445.png" alt="">
+                        <h4>菩提岛原名石臼坨，又名十九坨，2000年更名为“菩提岛”。释迦牟尼在菩提树下顿悟成佛，几百棵菩提树植于岛上，菩提岛由此得名。菩提岛位于河北省唐山湾国际旅游岛渤海湾之中，景区总面积4.4平方公里，南北长3公里，东西宽1公里，距秦皇岛市100公里，距北戴河90公里，是华北第一大岛。岛上有各种植物260多种，自然植被覆盖率98%以上，有“孤悬于海上的天然动植物园”之美誉；且有潮音寺和朝阳庵遗址等佛家古迹。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/24" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >清东陵</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">冬临遵化谒东陵，气象丰隆景泰兴</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz7xKAQ7aWAA093eRZk2o963.png" alt="">
+                        <h4>清东陵于清顺治十八年开始修建，历时247年。位于河北省唐山市遵化市西北30千米处，西距北京市区125千米。清东陵陵区在清代占地约2500平方千米，今管理占地面积为80平方千米。是中国现存规模最大、体系最完备、布局最规整、保存最完好的古代帝王陵墓建筑群之一，陆续建成217座宫殿牌楼，组成了大小15座陵园。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/25" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >娲皇宫</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">拾阶徐上谒娲娥，远处仙台发浩歌</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtn9yAaduKAA4iyImM7tA489.png" alt="">
+                        <h4>娲皇宫位于河北省邯郸市涉县中皇山上，占地面积5平方公里，由服务区、补天园、补天湖、娲皇宫和补天谷五个园区组成，是神话传说中女娲“抟土造人、炼石补天”的地方，是我国建筑规模最大、肇建时间最早的祀奉人类始祖女娲的古代建筑群。娲皇宫始建于北齐时期，初为北齐文宣帝高洋所建离宫，初开三石室，雕数尊神像。后经历代修葺续建，娲皇宫现今占地面积达76万平方米。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/18" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="hebeiModal8" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >响堂山石窟</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">宝相端严坐佛台，千年石窟有遗哀</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtnMOAQhToAA6AKva-Pdw747.png" alt="">
+                        <h4>响堂山石窟，又称响堂寺石窟，位于河北省邯郸市峰峰矿区。最初开凿于北齐时代。以后，隋、唐、宋、元、明各代均有增凿。尚有石窟16座，4000多尊雕像，石窟均营凿在山清水秀、环境优美的鼓山最优质的石岩中。石窟幽深，人们在山洞里击掌甩袖，都能发出洪亮的回声，故名“响堂”。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/15" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--四川-->
+<div class="portfolio-modal modal fade" id="sichuanModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >八台山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">八台山上白云飞，白云处处掩芳菲</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZsRQKAaMUwAAjR_ceor30915.png" alt="">
+                        <h4>八台山是国家AAAA级旅游景区。位于四川省达州市北部万源市八台乡的东部，因地貌成层状梯级递降，有八层之多，故名八台山。是国家级自然遗产地，国家地质公园，八台山主峰新八台海拔2272.3米，有巴山第二峰美誉。除主峰之外，还有老八台峰、独秀峰、铸剑峰等，独秀峰峰端尖削，似笔如塔。孤峰兀立，云雾缠绕，时隐时现，变幻无穷。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/11" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >巴山大峡谷</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">醉行巴山大峡谷，千岩竞秀乱眼目</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtE_KAPQRrABAv22D0CxA103.png" alt="">
+                        <h4>巴山大峡谷前身为“宣汉百里峡”，位于四川省达州市宣汉县境内，是国家AAAA级旅游景区、国家地质公园、省级自然保护区，是喀斯特岩溶地貌构成的山地峡谷型自然风景区，是国家级非物质文化遗产土家薅草锣鼓所在地。巴山大峡谷属喀斯特地貌，六大山脉托出十大主峰，景区历史悠久，古迹众多。有秦末汉初樊哙屯兵驻扎留下的将军坪、跑马梁、拴马石、大通险道及石栈道等遗址，有张献忠、白莲教留下的青龙寨、大寨子等遗址。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/29" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >白龙峡</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">连心湖下过微桥，守谷仙人试比高</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZsXgmAajQ9AAnG94kEjDk466.png" alt="">
+                        <h4>白龙峡位于重庆市渝北区大湾镇与广安市邻水县交界的御临镇境内，景区地属华蓥山山脉。地处国家4A级旅游景区———重庆统景峡的上游，幅员面积35平方公里，距重庆主城约65公里，是离主城较近的深山峡谷漂流景区。从重庆内环高速上道经渝邻高速，渝北大湾下道仅需50分钟，与广安、达州、南充等周边城市距离均在1小时车程内，全程旅游公路直达。
+                            </h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/16" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >凤凰山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">凤凰高阁俯晴空，万里蚕丛此路通</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZteaSAQJaNAAqjzyifBO8344.png" alt="">
+                        <h4>凤凰山森林公园，以凤凰山为主体。其山北与长平山相连，南与三台山、牛头山相望。地势北高南低，呈东北——西南走向。占地34.67公顷。最长1020米，最宽520米，周长2310米。最高海拔455.7米，最低海拔378.8米，高差76.9米，为典型的长岗丘陵地貌。绿化覆盖率95.70%，河谷、山岭、斜坡、台地、洼盆等地貌景观相映成趣。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/31" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >华蓥山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">沐雾迎霞褶皱延，高登俯瞰石奇观</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtmcSAf2x5AA_FXOwlE2w229.png" alt="">
+                        <h4>华蓥山位于四川省广安市境内，境内高速公路、襄渝铁路全线贯通，交通十分便捷。景区以苍翠茂密的山林为环境基调，以世界罕见的喀斯特早期发育石林奇观为典型景观代表，是中国海拔最高的山岳型石林，华蓥山风景优雅、诗意盎然、生态气候环境十分优越，旅游区内植被覆盖率高达95%以上，年平均气温17—22℃，是不可多得的“天然氧吧”。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/13" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >梦田花海</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">人间四月芳菲尽，山寺桃花始盛开</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz80iAAAbeAAl5r6QBzJ8161.png" alt="">
+                        <h4>梦田花海位于广安市武胜县飞龙镇柳树村，紧挨骑跑基地，占地面积约260亩。该景点重点布局郁金香、二月兰、薰衣草、月季花、绣球花、向日葵、冰刀虞美人、万寿菊、柳叶马鞭草、大丽花等花海区，注重色彩层次，花木品种交错，实现四季树常绿，四季花常香，集花木观赏、休闲度假、科普教育于一体的四季休闲观光园，吸引了不少成渝周边地区的游客。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/26" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >五华山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">清风习习雾茫茫，叠岭峰峦天地苍</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9C-ASdTHAAtzKKM3OvM860.png" alt="">
+                        <h4>五华山旅游区是国家4A级旅游景区，位于四川邻水县与重庆长寿交界处，紧临达渝沪蓉高速公路，距离重庆市区110公里，距离邓小平故里50公里，距离邻水县城33公里，相传这里曾是太上老君传经布道的地方，景区面积达15平方公里，生态环境优美，绿水映衬，青山环绕，林木繁茂，终年幽静清凉，历来是川渝两地游览和避暑的胜地。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/27" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="sichuanModal8" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >真佛山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">人云真佛事先知，神前叩首盍深思</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9MaALGg1AAtEhBqa8rQ898.png" alt="">
+                        <h4>真佛山景区主要由德化寺、玉佛寺、金刚寺、凌云寨等人文景观，以及胭脂湖、三仙石、海螺洞、莲花庵、云华山、刀脊梁等自然景观构成。古庙、石塔、林海、秀峰、溶洞、湖水浑然一体，奇、险、幽、峻应有尽有。具有悠久的历史文化背景和淳朴深厚的民情风俗内涵。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/28" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--云南-->
+<div class="portfolio-modal modal fade" id="yunnanModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >玉龙雪山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">丽江雪山天下绝，堆琼积玉几千叠</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtmLiAeewoAAl18SpnG3I042.png" alt="">
+                        <h4>玉龙雪山为云南省丽江市境内雪山群，东界丽鸣公路，西临虎跳峡涧、南起玉湖，北至大具下虎跳峡口，地处东经100°4′2″-100°16′30″、北纬27°3′2″～27°18′57″之间，在丽江北面约15千米处，全长75千米，是北半球最近赤道终年积雪的山脉，隔江西与中甸雪山、东与绵绵山相并列，北自三江口，向南延伸到北纬27°，如扇面向古城展开。全山的13座山峰由南向北纵向排列，主峰扇子陡最高海拔5596米。雪线高度于4800～5000米之间。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/1" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >拉市海</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';"> 我自悠闲拉市海，静花飞鸟步随来</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtnVuAFhuqAAepNCKNxMM214.png" alt="">
+                        <h4>拉市海原为滇西北古地槽的一部分，中生代燕山运动时褶皱隆起成陆，至中新世成为一个准平原，随着横断山脉造山运动的发展，到上新世末至更新世初，玉龙雪山下这个准平原又分割成三个相对高差在100米至200米的高原山间盆地 ，即拉市坝、丽江坝、七河坝。拉市坝是其中最高的坝子，坝中仍有一片水域，丽江是内陆地区，见面积稍大的湖便称之为海。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/4" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >蓝月谷</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">春来江水绿如蓝，大珠小珠落玉盘</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtkDSASKq9AAzXH2s4IGE411.png" alt="">
+                        <h4>蓝月谷地处云南省丽江市玉龙纳西族自治县玉龙雪山东麓，俗称“白水河”，以其巍峨壮美的雪山、湛蓝如玉的湖水与雄齐秀丽的峡谷风光享誉世界，因湖水湛蓝、山谷呈月牙状而得名，相传是英国作家詹姆斯·希尔顿笔下《消失的地平线》中蓝月亮山谷的原型。境内有红仙客栈、玉液湖、镜潭湖、蓝月湖、听涛湖等美景，有着“小九寨沟”的美誉，犹如一个蓝色月亮镶嵌在玉龙雪山下，是玉龙雪山新兴的网红打卡地。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/3" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >丽江古城</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">古城夜空茶酒香，游人如织赛马帮</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9YuADifLAA3XcCD24AM848.png" alt="">
+                        <h4>丽江古城位于云南省丽江市古城区，又名大研镇，坐落在丽江坝中部，始建于宋末元初，地处云贵高原，面积为7.279平方公里。丽江古城内的街道依山傍水修建，以红色角砾岩铺就，有四方街、木府、五凤楼、黑龙潭、文昌宫、王丕震纪念馆、雪山书院、王家庄基督教堂、方国瑜故居、白马龙潭寺、顾彼得旧居、净莲寺、普贤寺、接风楼、十月文学馆、红军长征过丽江指挥部纪念馆、丽江古城历史文化展示馆、丽江古城徐霞客纪念馆等景点。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/6" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >泸沽湖</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">镜里春风展画图，小舟犁玉水抛珠</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9fuAXUc1AAvjg3ngpU0061.png" alt="">
+                        <h4>泸沽湖湖盆区坐落于永宁盆地，是中国第三大深水湖泊，湖内有一小岛。泸沽湖周边主要居住着摩梭人、彝族和普米族，沿岸居住有蒙古族7种民族，约1.3万人。优美的自然环境和奇特的民族风情，使这里成为著名的旅游景区。泸沽湖区域内设有丽江泸沽湖摩梭文化旅游区、凉山州泸沽湖旅游景区。2023年8月，泸沽湖景区全力以赴争创国家5A级旅游景区。2023年12月，四川盐源泸沽湖作为黑颈鹤重要栖息地入选陆生野生动物重要栖息地名录。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/7" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >木府</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">木府风云六百年，明珠璀璨缀云滇</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9jqAak73AAukxW_xRoA267.png" alt="">
+                        <h4>木府全称木氏土司府衙署，位于云南省丽江市古城区大研街道关义街光院巷49号，地面积30666.66平方米。木府原系丽江世袭土司木氏衙署，“略备于元，盛于明”。明代木得，开建主体建筑。1998年，重建，并在府内设立了古城博物院。木府充分反映了明代中原建筑的风采气质，同时保留了唐宋中原建筑古朴粗犷的流风余韵。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/8" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >束河古镇</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">雨浥轻尘草色青，旧村茶马几经停</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9qSAabgBAAupdsDicsE510.png" alt="">
+                        <h4>束河古镇位于云南省丽江市丽江古城西北4公里处，是丽江古城周边的一个小集市镇，已有千年的历史。束河古镇总面积5平方千米，总建筑面积40万平方米，绿化面积60%。束河古镇作为丽江古城的一个组成部分，有保存完好的古道、集市，有传统民居近千幢，土著居民以纳西族为主，是纳西族先民在丽江坝子中最早的聚居地之一。自明代以来，许多从事皮革加工和其他手工业的人云集束河，繁华热闹，束河古镇逐步成为茶马古道上的重镇和纳西文化交流中心。束河是纳西族从农耕文明向商业文明过渡的活标本，拥有明代壁画、明代建筑大觉宫、清代建筑三圣宫等珍贵文物和建筑。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/9" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="yunnanModal8" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >云杉坪</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">喜见玉龙云为开，层林墨绿翠屏排</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtoT6AZwwYAAoizpK9QYE787.png" alt="">
+                        <h4>云杉坪是隐藏在原始云杉林中的巨大草坪，海拔3240米，纳西语称“游午阁”，即“情死之地”，又名锦绣谷。其位于玉龙雪山东麓的山箐里，在雪山主峰的右下方，具有云杉坪索道等景点。传说云杉坪是纳西族第一对情人殉情之地。据传说纳西族情死的开山鼻祖是开美和于勒排，他俩如蜂花恩爱的爱情生活，却被一夫多妻制的封建婚姻破坏扯离，他们向往自由的爱情生活，便双双上云杉坪情死。所以逢六月火把节的时辰，落居玉龙山附近村寨的青年男女，编制标志开美和于勒排的纸人，来到云杉坪祭奠第一对情死的开山鼻祖。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/5" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--内蒙-->
+<div class="portfolio-modal modal fade" id="neimengModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >大青沟</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">温带雨林何处游，西辽河域大青沟</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZs9kSAeBgEAArzYQbd-Ms202.png" alt="">
+                        <h4>大青沟国家级自然保护区位于内蒙古自治区科尔沁草原西部。大青沟宽200多米，深50多米，全长约24公里，总面积8183公顷。1980年内蒙古自治区正式建立了大青沟省级自然保护区。大青沟保护区主要是以为天然珍贵阔叶混交林和科尔沁沙地原生森林生态系统为保护对象。2023年11月30日，内蒙古科尔沁左翼后旗大青沟猛禽重要栖息地入选陆生野生动物重要栖息地名录。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/19" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >呼和浩特</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">极目都疑天有柱，举头常见月穿都</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz9u6AN9YdAAd5tp0ABhk920.png" alt="">
+                        <h4>呼和浩特市，简称呼市，民国时期及建国初期为绥远省省会，后绥远省撤销，并入内蒙古，改名呼和浩特，成为内蒙古自治区首府。Ⅱ型大城市，中国北方沿边地区重要的中心城市。下辖4个区、4个县和1个旗，总面积1.72万平方千米。2023年末，呼和浩特市常住人口360.41万。 呼和浩特市位于亚欧大陆内部，是呼包鄂城市群中心城市之一，连接黄河经济带、亚欧大陆桥、环渤海经济区域的重要桥梁，也是中国向蒙古国、俄罗斯开放的重要沿边开放中心城市。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/33" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >呼伦贝尔大草原</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">春到人间草木知，东风吹水绿参差</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZte6qAK_rJAAlKFD9MEaE794.png" alt="">
+                        <h4>呼伦贝尔草原位于内蒙古自治区东北部，地处大兴安岭以西的呼伦贝尔高原上，因呼伦湖、贝尔湖而得名。整体地势东高西低，海拔在650～700米之间，东西宽约350公里，南北长约300公里，总面积约11.3万平方公里，其中可利用草场面积833.33万公顷。呼伦贝尔草原是世界著名的天然牧场，是世界四大草原之一，被称为世界上最好的草原，是全国旅游二十胜景之一。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/32" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >可汗山</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">操戈披挂可汗山，牧草茫茫鹰瞰盘</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtmriAaoFNAA17e-DyU2s696.png" alt="">
+                        <h4>霍林郭勒市可汗山旅游景区建成于2011年。可汗山景区位于观音山脚下，占地1.3万平方米，分为山门、苍狼之路、蒙元兵阵、蒙元帝王雕塑群四大部分，山顶部修建有元太祖成吉思汗和元世祖忽必烈的巨型雕像。在山脚下放眼望去，草原风光尽收眼底，心旷神怡。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/14" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >库伦三大寺</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">春引和风播塞外，福祈盛世到民心</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZz91-AdwPYAAyD_ovmUsE275.png" alt="">
+                        <h4>库伦三大寺，位于内蒙古自治区通辽市库伦旗库伦镇中心街与兴源路交汇口，占地面积约30000平方米。清顺治六年，始建兴源寺，建成后顺治皇帝赐“兴源寺”蒙、汉、藏三体匾额。清康熙九年，于兴源寺之东起建“象教寺”。清乾隆七年，由锡勒图库伦第十二任札萨克达喇嘛阿旺札木杨呼图克图主持建造“福缘寺”，此后，历任萨克达喇嘛均有不同程度的修建，保留至今，已有370多年的历史。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/34" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >满洲里</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">衔春紫燕纷飞叫，辉映山河仙境妙</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/02/wKgKCmZ0ODiAWHukAAj-6tHOMfw892.png" alt="">
+                        <h4>清光绪二十七年，中东铁路西部线建立火车站，因从俄国进入中国东北地区的首站，故名“满洲里站”，俄语为“满洲里亚”，音译成汉语变成了“满洲里”。民国三十年1月，改为满洲里市。2001年10月，由呼伦贝尔市代管。2013年，呼伦贝尔市扎赉诺尔区由满洲里市代管。2023年3月，扎赉诺尔区由呼伦贝尔市直接管理。主要景点有中俄边境旅游区、猛犸旅游区、中俄互市贸易旅游区、满洲里套娃景区等。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/35" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >孝庄园</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">王府恢弘换旧颜，雕梁画栋胜从前</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtnoeAT7xVAAmyLT8KPYE938.png" alt="">
+                        <h4>通辽市孝庄园文化旅游区，简称孝庄园，是以清代国母孝庄文皇后出生地为主题的大型历史人文景区。景区位于内蒙古科尔沁草原腹地，通辽市科左中旗境内，原达尔罕亲王府旧址，距离通辽市区48公里。景区总占地面积1万亩，规划有孝庄故居。目前，王府内设有孝庄博物馆、科尔沁蒙古马文化博物馆、科尔沁民俗博物馆和达尔罕亲王府历史展馆等，集中展示科尔沁历史文化和民俗文化。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/17" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portfolio-modal modal fade" id="neimengModal8" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"> </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <!-- 景点细节 -->
+                        <h2 >银沙湾</h2>
+                        <p class="item-intro" style="color: #1c424d;font-family: 'My1';">湾滩夜水抹银沙，射彩霓虹照万家</p>
+                        <img class="img-responsive img-centered" src="http://192.168.10.10:8080/group1/M00/00/01/wKgKCmZtaXaAOAMZAAlsxCqSU3Q889.png" alt="">
+                        <h4>银沙湾旅游风景区位于黑龙江省大庆市、杜尔伯特蒙古族自治县胡吉吐莫镇，阿木塔湖畔。景区自然生态环境保存完整，风光宜人风景秀丽。清澈自然的阿木塔湖、得天独厚的万顷湖水、天然银色的千米沙滩、精美别致的木草式建筑、蓝天白云下的天然浴场素有北方小三亚之称。不到大海，却能见到沙滩，不去航海，却能乘风破浪。大庆的银沙湾可以与广西的北海银滩相媲美。</h4>
+                        <ul class="list-inline">
+                            <hr>
+                        </ul>
+                        <b><p style="font-size: 18px;margin-top: 10px" th:if="${session.user==null}" th:text="登录可前往购买"></p></b>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-times "></i> 关闭</button>
+                        <a th:if="${session.user==null}" th:href="@{/login}" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-hand-right" style="margin-right: 5px"></i> 点击登陆</a>
+                        <a th:if="${session.user!=null}" href="/spotsWeb/detail/30" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> 前往购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--导入layui js文件-->
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script type="text/javascript" src="../static/js/jquery-2.1.1.js" th:src="@{/js/jquery-2.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../static/js/SmoothScroll.js" th:src="@{/js/SmoothScroll.js}"></script>
+<script type="text/javascript" src="../static/js/wow.min.js" th:src="@{/js/wow.min.js}"></script>
+<script type="text/javascript" src="../static/js/jquery.isotope.js" th:src="@{/js/jquery.isotope.js}"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="../static/js/html5shiv.js" th:src="@{/js/html5shiv.js}"></script>
+<script src="../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+<![endif]-->
+<script id="xplayer" src="http://music.klf.icu/Static/player/player.js" key="66738e4395a71"></script>
+</body>
+</html>

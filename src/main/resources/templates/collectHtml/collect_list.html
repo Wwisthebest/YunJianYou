@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>景点列表</title>
+    <link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <style>
+        /* 自定义样式 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .nav-item a {
+            display: block;
+            padding: 10px;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border-left: 5px solid transparent;
+        }
+        .nav-item a:hover {
+            background-color: #5FB878;
+            border-left-color: #FF5722;
+        }
+        .header {
+            background-color: #393D49;
+            color: #fff;
+            height: 50px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            line-height: 50px;
+            padding-left: 10px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .layui-table-cell{
+            text-align:center;
+            height: auto;
+            white-space: normal;
+        }
+
+
+    </style>
+
+</head>
+<body>
+<!-- 根据后端数据生成数据表格 -->
+<table class="layui-hide " id="test" lay-filter="test"></table>
+
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+
+<script th:inline="none">
+
+    layui.use(function(){
+
+        //获取table组件的对象
+        let table = layui.table;
+        let $=layui.$;
+        let layer=layui.layer;
+
+
+        //头部工具栏事件
+        table.on('toolbar(test)',function(obj){
+            console.log("顶部工具栏事件被触发了...",obj)
+            let event =obj.event;
+             if(event=='deleCollect'){
+                let id=obj.config.id;
+                let checkStatus=table.checkStatus(id);
+                let list =checkStatus.data;
+                if(list && list.length==0){
+                    layer.msg("没有选择要删除的数据");
+                }else{
+                    layer.confirm('确认删除?',{btn:['确定','取消']},function(index){
+                        let arr=[];
+                        for(let i=0;i<list.length;i++){
+                            arr.push(list[i].fId);
+                        }
+                        $.ajax({
+                            type:"post",
+                            url:"http://localhost:8086/col/deleteManyCollect",
+                            data:JSON.stringify(arr),
+                            contentType:'application/json',
+                            dataType:"json",
+                            success:function(d){
+                                if(d.code==0){
+                                    table.reload("test")
+                                }else{
+                                    layer.msg(d.msg);
+                                }
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+            }
+        });
+
+        table.on('tool(test)',function(obj){
+            console.log(obj);
+            let event=obj.event;
+            if(event=='del'){
+                layer.confirm('确定删除?',{btn:['确定','取消']},function(index){
+                    //确定删除
+
+                    //AJAX调用
+                    let id =obj.data.fId;
+                    $.ajax({
+                        type:"DELETE",
+                        url:"http://localhost:8086/col/delByfId",
+                        data:{ fId: obj.data.fId },
+                        success:function(d){
+                            if(d.code==0){
+                                table.reload("test")
+                            }else{
+                                layer.msg(d.msg);
+                            }
+                        }
+                    });
+                    //关闭提示框
+                    layer.close(index);
+                });
+
+
+            }else if(event=='editl'){
+                layer.open({
+                    title:"更新收藏信息",
+                    type:2,
+                    content:"/spotEditPage?collect="+obj.data.soptState+"&fid="+obj.data.id,
+                    area:['1000px','650px'],
+                    closeBtn:1,
+                    end:function(){
+                        table.reload("test")
+                    },
+                    success:function(layero,index,that){
+                        let body=layer.getChildFrame('body',index);
+                        body.find('#fId').val(obj.data.fId);
+                        body.find('#ssName').val(obj.data.ssName);
+                        body.find('#ssAddress').val(obj.data.ssAddress);
+                        body.find('#spotInfo').val(obj.data.spotInfo);
+                        body.find('#ssId').val(obj.data.ssId);
+                        body.find('#uId').val(obj.data.uId);
+                        body.find('#ssPrice').val(obj.data.ssPrice);
+                    }
+                });
+            }
+        });
+        //调用对象中的函数进行表格生成
+        table.render({
+            elem:"#test",
+            url:"http://localhost:8086/col/sea",
+            page: {
+                limit:10,
+                prev:"上一页",
+                next:"下一页",
+                groups:6
+            },
+            request:{
+                pageName:'page',
+                limitName:'size'
+            },
+
+            parseData:function(res){
+                return{
+                    "code": res.code, // 解析数据列表
+                    "msg": res.message, // 解析提示文本
+                    "count": res.data.total, // 解析数据长度
+                    "data": res.data.list// 解析数据长度
+                }
+            },
+
+            toolbar:`
+					<div>
+						<button type="button" lay-event="deleCollect"  class="layui-btn layui-btn-sm layui-bg-red">批量删除收藏</button>
+					</div>
+
+					`,
+            cols:[[
+                {type:'checkbox'},
+                {
+                    title:"收藏序号",
+                    field:"fId"
+                },
+                {
+                    title:"景点名",
+                    field:"ssName"
+                },
+                {
+                    title:"景点地址",
+                    field:"ssAddress"
+                },
+                {
+                    title:"景点序号",
+                    field:"ssId"
+                },
+                {
+                    title:"门票",
+                    field:"ssPrice"
+                },
+                {
+                    title:"操作",
+                    width:300,
+                    templet:function(d){
+                        let s='<button type="button" lay-event="del" class="layui-btn layui-btn-sm layui-bg-red"><i class="layui-icon layui-icon-clear"></i> 删除</button>'
+                        return s;
+                    },
+                }
+            ]],
+        });
+    });
+</script>
+</body>
+</html>

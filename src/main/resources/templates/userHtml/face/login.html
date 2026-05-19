@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人脸识别登陆</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        body{background: url(/images/face-photo/background.jpg) center;}/**/
+        h1{color: #fff;text-align: center;line-height: 80px;}
+        .camera{width: 400px;height: 400px;margin: 0 auto;}
+        .log{width: 205px;height:55px;margin: 0 auto;}
+        #login{width: 200px;height:50px;background-color: #a1bfbf;text-align: center;line-height: 50px;color: rgb(0, 0, 15);border-radius: 10px;}
+        #canvas{display: none;}
+        #name{width: 250px;height:50px; line-height:50px;margin: 20px auto; text-align: center;}
+        .contrl{width: 250px;height: 55px;margin: 0 auto;}
+    </style>
+</head>
+<body>
+    <h1>百度云人脸识别登陆</h1>
+    <div id="name">用户名：<input type="text" name="uName" id="uName"/></div>
+
+    <div class="camera">
+        <video id="video" width="450" height="300" src="" autoplay></video>
+        <canvas id="canvas" width="450" height="300"></canvas>
+    </div>
+    <div class="log"><button id="login">登陆</button><br/></div>
+    <div class="contrl">
+        <button id="start" onclick="startAuto()">启用自动登录</button>&nbsp;
+        <button id="stop" onclick="stopAuto()">暂停自动登录</button>
+        <button id="toRegister" onclick="location.href='/to_faceRegister'">人脸采集</button>
+    </div>
+    <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
+    <script type="text/javascript">
+        /**调用摄像头，获取媒体视频流**/
+        var video = document.getElementById('video');
+        //返回画布二维画图环境
+        var userContext = canvas.getContext("2d");
+        var getUserMedia =
+            //浏览器兼容,表示在火狐、Google、IE等浏览器都可正常支持
+            (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia)
+        //getUserMedia.call(要调用的对象，约束条件，调用成功的函数，调用失败的函数)
+        getUserMedia.call(navigator,{video: true,audio: false},function(localMediaStream){
+            //获取摄像头捕捉的视频流
+            video.srcObject=localMediaStream;
+        },function(e){
+            console.log("获取摄像头失败！！")
+        });
+        //点击按钮登陆事件
+        var btn = document.getElementById("login");
+
+        //登陆函数
+        function toLogin() {
+            //获取登录者面部信息
+            userContext.drawImage(video,0,0,450,300);
+            var userImgSrc = document.getElementById("canvas").toDataURL("images/face-photo/png");
+            //拿到bash64格式的照片信息
+            var faceBase = userImgSrc.split(",")[1];
+
+            //ajax异步请求
+            $.ajax({
+                url: "faceLogin",
+                type: "post",
+                data: {"faceBase": faceBase},
+                dataType:"json",
+                success: function(result){
+                    if(result.num === '1'){
+                        sessionStorage.setItem("uName",result.username);
+                        alert("登陆成功！欢迎你,尊敬的用户:"+result.username+"!");
+                        location.href="/to_faceIndex";
+                    }else{
+                        console.log("登陆失败！");
+                    }
+                }
+            })
+        }
+        btn.onclick=toLogin();//点击按钮时进行登陆
+        var timer;
+        function starAuto(){//每隔3秒自动登陆
+            timer=setInterval(toLogin,3000);
+        }
+        starAuto();//设置开机自动识别
+        function stopAuto(){//关闭自动登录功能
+            clearInterval(timer);
+        }
+    </script>
+</body>
+</html>

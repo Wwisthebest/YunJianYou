@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>云间游-后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入layui样式-->
+    <link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+</head>
+
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo  layui-bg-black"><p>云间游</p></div>
+
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block ">
+                <!-- 天气信息 -->
+                <div class="weather ">
+                    <div id="tp-weather-widget"></div>
+                    <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+                    <script>tpwidget("init", {
+                        "flavor": "slim",
+                        "location": "WS0E9D8WN298",
+                        "geolocation": "enabled",
+                        "language": "zh-chs",
+                        "unit": "c",
+                        "theme": "white",
+                        "container": "tp-weather-widget",
+                        "bubble": "enabled",
+                        "alarmType": "badge",
+                        "color": "#FFFFFF",
+                        "uid": "U9A80B2398",
+                        "hash": "8adb57e50cb6193dc909a1e1a430c48e"
+                    });
+                    tpwidget("show");
+                    </script>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item showNotice right-arrow-button" id="showNotice">
+                <a href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite> </a>
+            </li>
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                <a href="javascript:;">
+                    <img src="/images/man.png" class="layui-circle" width="35" height="35"/>
+                    <cite th:text="${session.adminUser.aName}"></cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:">
+                        <cite th:text="${session.adminUser.aUsername}"></cite>
+                    </a> </dd>
+                    <!--<dd><a href="javascript:;">个人信息</a></dd>-->
+                    <dd><a href="javascript:adminUserLogout();">登出 </a></dd>
+                </dl>
+            </li>
+
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a href="javascript:;" class="link-active layui-icon layui-icon-spread-left"
+                                              lay-href="/b_font" data-id="1" data-title="后台首页"><span>后台首页</span></a></li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-spread-left"></i><span>用户管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="link-active" lay-href="/findUserPage" data-id="2"
+                               data-title="用户信息"><span>用户信息</span></a>
+                        </dd>
+                        <dd><a href="javascript:;"  class="link-active" lay-href="/pageCollect" data-id="4"
+                               data-title="收藏信息"><span>收藏信息</span></a >
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-spread-left"></i><span>景点管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="link-active" lay-href="/pageSpots" data-id="3"
+                               data-title="景点管理"><span>景点信息</span></a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon layui-icon-spread-left"></i><span>内容管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="link-active" lay-href="/b_body" data-id="4" data-title="查看前台">查看前台</a></dd>
+                        <dd><a href="javascript:;">填内容</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon layui-icon-spread-left"></i><span>数据分析</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">填内容</a></dd>
+                        <dd><a href="javascript:;">填内容</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-tab" lay-filter="tables" lay-allowclose="true">
+            <ul class="layui-tab-title top_tab">
+                <li class="layui-nav-item"><i class="iconfont icon-computer"></i> <cite>后台首页</cite></li>
+            </ul>
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="http://192.168.162.1:10000/ddt689kt8dje/" width="1400" height="590"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>
+    <div class="site-mobile-shade"></div>
+
+<!--    <div class="layui-footer footer">-->
+<!--        &lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+<!--        <p>Copyright © 2024 丽江文化旅游学院</p>-->
+<!--    </div>-->
+
+    <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+    <script>
+        //JS
+        layui.use(['element', 'layer', 'util'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+            var util = layui.util;
+            var $ = layui.$;
+            var isShow = true;
+
+            //头部事件
+            util.event('lay-header-event', {
+                menuLeft: function (othis) { // 左侧菜单事件
+                    //定义一个标志位
+                    //选择出所有的span，并判断是不是hidden
+                    $('.layui-nav-item span').each(function () {
+                        if ($(this).is(':hidden')) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        };
+                    });
+                    $('.layui-header span').each(function () {
+                        if ($(this).is(':hidden')) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        };
+                    });
+
+                    //判断isshow的状态
+                    if (isShow) {
+                        $('.layui-side.layui-bg-black').width(60); //设置宽度
+                        $('.layui-logo').width(60);
+                        $('.kit-side-fold i').css('margin-right', '70%');  //修改图标的位置
+                        //将footer和body的宽度修改
+                        $('.layui-layout-left').css('left', 60 + 'px');
+                        $('.layui-body').css('left', 60 + 'px');
+                        $('.layui-footer').css('left', 60 + 'px');
+                        //将二级导航栏隐藏
+                        $('dd span').each(function () {
+                            $(this).hide();
+                        });
+                        //修改标志位
+                        isShow = false;
+                    } else {
+                        $('.layui-side.layui-bg-black').width(200);
+                        $('.layui-logo').width(200);
+                        $('.kit-side-fold i').css('margin-right', '10%');
+                        $('.layui-layout-left').css('left', 200 + 'px');
+                        $('.layui-body').css('left', 200 + 'px');
+                        $('.layui-footer').css('left', 200 + 'px');
+                        $('dd span').each(function () {
+                            $(this).show();
+                        });
+                        isShow = true;
+                    };
+                    layer.msg('再次点击展开左侧菜单', { icon: 0 });
+                },
+                menuRight: function () {  // 右侧菜单事件
+                    layer.open({
+                        type: 1,
+                        title: '更多',
+                        content: '<div style="padding: 15px;">欢迎您，超级管理员。</br></br></br>' +
+                            '以下是您所拥有权限：</br></br>' +
+                            '1.用户管理：</br>&nbsp;&nbsp;&nbsp;创建、修改和删除用户账户，设置密码策略和权限。</br></br>' +
+                            '2.系统配置：</br>&nbsp;&nbsp;&nbsp;对系统设置进行修改，包括网络设置、安全设置等。</br></br>' +
+                            '3.资源访问控制：</br>&nbsp;&nbsp;&nbsp;管理文件和文件夹的访问权限，控制对特定资源的访问。</br></br>' +
+                            '4.安全审计：</br>&nbsp;&nbsp;&nbsp;监控和记录系统的活动，以便审计和安全分析。</br></br>' +
+                            '5.系统维护：</br>&nbsp;&nbsp;&nbsp;进行系统备份、更新和维护，确保系统的稳定和安全运行。\n</div>',
+                        area: ['260px', '100%'],
+                        offset: 'rt', // 右上角
+                        anim: 'slideLeft', // 从右侧抽屉滑出
+                        shadeClose: true,
+                        scrollbar: false
+                    });
+                }
+            });
+        });
+    </script>
+    <script>//JavaScript代码区域
+    layui.use(['element', 'layer', 'jquery'], function () {
+        var element = layui.element;
+        var $ = layui.jquery;
+        //左侧菜单点击事件
+        $('.link-active').on('click', function () {
+            var dataid = $(this);
+            //判断右侧是否有tab
+            if ($('.layui-tab-title li[lay-id]').length <= 0) {
+                tabFunction.tabAdd(dataid.attr('lay-href'), dataid.attr('data-id'), dataid.attr('data-title'));
+            } else {
+                //判断tab是否已经存在
+                var isExist = false;
+                $.each($('.layui-tab-title li[lay-id]'), function () {
+                    //筛选id是否存在
+                    if ($(this).attr('lay-id') == dataid.attr("data-id")) {
+                        isExist = true;
+                    }
+                });
+                //不存在，增加tab
+                if (isExist == false) {
+                    tabFunction.tabAdd(dataid.attr('lay-href'), dataid.attr('data-id'), dataid.attr('data-title'));
+                }
+            }
+            //转到要打开的tab
+            tabFunction.tabChange(dataid.attr('data-id'));
+
+        });
+
+        //定义函数 绑定增加tab，删除tab，切换tab几项事件
+        var tabFunction = {
+            //新增tab url 页面地址 id 对应data-id name标题
+            tabAdd: function (url, id, name) {
+                element.tabAdd('tables', {
+                    title: name,
+                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:800px"></iframe>',
+                    id: id
+                });
+            },
+            //根据id切换tab
+            tabChange: function (id) {
+                element.tabChange('tables', id)
+            },
+            //关闭指定的tab
+            tabDelete: function (id) {
+                element.tabDelete('tables', id)
+            }
+        }
+    });
+    </script>
+    <script type="text/javascript">
+        function adminUserLogout(){
+            //询问
+            layer.confirm('确定退出云间游系统？',{
+                btn:['确定','取消']
+            },function (){
+                location.href="/adminUser_logout";
+            });
+        }
+    </script>
+</div>
+</body>
+
+</html>

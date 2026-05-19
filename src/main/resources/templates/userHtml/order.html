@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>云间游系统-门票购买</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/login_style.css" th:href="@{/css/login_style.css}"/>
+</head>
+<body>
+    <!--整体布局-->
+    <div class="container right-panel-active">
+
+        <!--注册框-->
+        <div class="container_from container--signin" style="width: 260px">
+            <form class="from" id="from2" method="post" action="/doBuy">
+                <h2 class="from_title">门票购买</h2>
+                <input type="hidden" id="userId" name="userId" th:value="${userId}"/>
+                <input type="text" id="name" name="name" required="required" lay-verify="name" th:value="${name}" autocomplete="off" class="input" readonly/>
+                <input type="text" id="username" name="username" required="required" lay-verify="username" placeholder="请输入姓名" autocomplete="off" class="input"/>
+                <input type="text" id="n_phone" name="phone" required="required" lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="input"/>
+                <input type="text" id="cardNo" name="cardNo" required="required" lay-verify="cardNo" placeholder="请输入身份证号" autocomplete="off" class="input"/>
+                <input type="text" id="udate" name="udate" required="required" lay-verify="date" placeholder="请输入购票日期" autocomplete="off" class="input"/>
+                <button class="btn" type="submit" >购买</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+</html>

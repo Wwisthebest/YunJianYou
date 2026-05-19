@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人脸识别注册</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        body{background: url(/images/face-photo/background.jpg)  center;}/**/
+        h1{color: #fff;text-align: center;line-height: 80px;}
+        .camera{width: 400px;height: 400px;margin: 0 auto;}
+        .reg{width: 205px;height:55px;margin: 0 auto;}
+        #register{width: 200px;height:50px;background-color: #cde1d5;text-align: center;line-height: 50px;color: #00000f;border-radius: 10px;}
+        #canvas{display: none;}
+        #name{width: 250px;height:50px;margin: 0 auto;}
+    </style>
+</head>
+<body>
+<h1>百度云人脸识别注册</h1>
+<div id="name">用户名：<input type="text" name="uName" id="uName"/></div>
+
+<div class="camera">
+    <video id="video" width="450" height="300" src="" autoplay></video>
+    <canvas id="canvas" width="450" height="300"></canvas>
+</div>
+<div class="reg"><button id="register" >确定注册</button></div>
+
+<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
+    <script type="text/javascript">
+        /**调用摄像头，获取媒体视频流**/
+        var video = document.getElementById('video');
+        //返回画布二维画图环境
+        var userContext = canvas.getContext("2d");
+        var getUserMedia =
+            //浏览器兼容,表示在火狐、Google、IE等浏览器都可正常支持
+            (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia)
+        //getUserMedia.call(要调用的对象，约束条件，调用成功的函数，调用失败的函数)
+        getUserMedia.call(navigator,{video: true,audio: false},function(localMediaStream){
+            //获取摄像头捕捉的视频流
+            video.srcObject=localMediaStream;
+        },function(e){
+            console.log("获取摄像头失败！！")
+        });
+        //点击按钮注册事件
+        var btn = document.getElementById("register");
+
+        btn.onclick = function () {
+            var uName = $("#uName").val();
+            alert($("#uName").val());
+            if(uName != null){
+                //点击按钮时拿到登陆者面部信息
+                userContext.drawImage(video,0,0,450,300);
+                var userImgSrc = document.getElementById("canvas").toDataURL("images/face-photo/png");
+                //拿到bash64格式的照片信息
+                var faceBase = userImgSrc.split(",")[1];
+
+                //ajax异步请求
+                $.ajax({
+                    url: "faceRegister",
+                    type: "post",
+                    data: {"faceBase": faceBase,
+                           "uName": uName
+                    },
+                    success: function(result){
+                        if(result === '1'){
+                            alert("注册成功！！，点击确认跳转至登录页面");
+                            window.location.href="/to_faceLogin";
+                        }else if(result === '2'){
+                            alert("您已经注册过啦！！");
+                        }else{
+                            alert("系统错误！！");
+                        }
+                    }
+                })
+            }else{
+                alert("用户名不能为空");
+            }
+        }
+    </script>
+</body>
+</html>

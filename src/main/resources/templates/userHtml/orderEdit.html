@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Free Responsive Html5 Templates">
+    <meta name="author" content="">
+    <link rel="icon" href="../static/images/icon.png" th:href="@{/images/icon.png}">
+    <title>云间游</title>
+
+    <!-- 导入layui -->
+    <link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <!-- Bootstrap CSS-->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+
+    <!-- Custom Fonts -->
+    <link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+
+</head>
+<body>
+<!-- 内容 -->
+<div id="page-content" class="index-page">
+    <section id="" class="box-content box-style text-center">
+        <div class="container">
+            <h1 style="text-align:left">订单编辑</h1>
+            <form class="layui-form layui-form-pane">
+                <input type="hidden" id="userId" name="userId" th:value="${ticket?.userId}"/>
+                <input type="hidden" id="id" name="userId" th:value="${ticket?.id}"/>
+                    <label style="width: 70px">景点名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${ticket?.name}" id="name" name="name" required="required"
+                               lay-verify="name" lay-data="name" autocomplete="off" class="input" readonly/>
+                    </div><br/>
+                    <label style="width: 70px">姓名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${ticket?.username}" id="username" name="username"
+                               required="required"
+                               lay-verify="username" placeholder="请输入姓名" autocomplete="off" class="input"/>
+                    </div><br/>
+                    <label style="width: 70px">联系方式：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${ticket?.phone}" id="phone" name="phone" required="required"
+                               lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="input"/>
+                    </div><br/>
+                    <label style="width: 70px">身份证：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${ticket?.cardNo}" id="cardNo" name="cardNo" required="required"
+                               lay-verify="cardNo" placeholder="请输入身份证号" autocomplete="off" class="input"/>
+                    </div><br/>
+                    <label style="width: 70px">日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${ticket?.udate}" id="udate" name="udate" required="required"
+                               lay-verify="date" placeholder="请输入购票日期" autocomplete="off" class="input"/>
+                    </div><br/>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit lay-filter="add" type="button" onclick="doSave()">保存</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+
+
+<!--导入layui js文件-->
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="../static/js/jquery-2.1.1.js" th:src="@{/js/jquery-2.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../static/js/SmoothScroll.js" th:src="@{/js/SmoothScroll.js}"></script>
+<script type="text/javascript" src="../static/js/wow.min.js" th:src="@{/js/wow.min.js}"></script>
+<script type="text/javascript" src="../static/js/jquery.isotope.js" th:src="@{/js/jquery.isotope.js}"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="../static/js/html5shiv.js" th:src="@{/js/html5shiv.js}"></script>
+<script src="../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+<![endif]-->
+<script>
+    function doSave(){
+        let name = $("#name").val();
+        let username = $("#username").val();
+        let phone = $("#phone").val();
+        let cardNo = $("#cardNo").val();
+        let udate = $("#udate").val();
+        let userId = $("#userId").val();
+        let id = $("#id").val();
+        $.ajax({
+            url: "/user/doSave",
+            type: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "name": name,
+                "username": username,
+                "phone": phone,
+                "cardNo": cardNo,
+                "udate": udate,
+                "userId": userId,
+                "id": id
+            }),
+            dataType: "json",
+            success: function (d) {
+                console.log(d)
+                if (d.code == 0) {
+                    //关闭弹出层
+                    let index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                    parent.location.href="/orderMng";
+                } else {
+                    layer.msg(d.msg);
+                }
+            }
+        })
+    }
+    // layui.use(function(){
+    //     let form = layui.form;
+    //     //表单提交事件
+    //     form.on("submit(add)",function(data){
+    //         let field = data.field;
+    //         // data.field.spotInfo = editor.html();
+    //         $.ajax({
+    //             url: "/user/doSave",
+    //             type: "post",
+    //             data: JSON.stringify(field),
+    //             contentType: 'application/json',
+    //             dataType: "json",
+    //             success: function (d) {
+    //                 console.log(d)
+    //                 if (d.code == 0) {
+    //                     //关闭弹出层
+    //                     let index = parent.layer.getFrameIndex(window.name);
+    //                     parent.layer.close(index);
+    //                 } else {
+    //                     layer.msg(d.msg);
+    //                 }
+    //             }
+    //             //
+    //             //
+    //             // success: function (data) {
+    //             //     if (data.code == 0) {
+    //             //         layer.msg('取消成功', {icon: 1, time: 1000});
+    //             //         setTimeout(function () {
+    //             //             window.location.href = "/orderMng";
+    //             //         }, 1000);
+    //             //     } else {
+    //             //         layer.msg('取消失败', {icon: 2, time: 1000});
+    //             //     }
+    //             // }
+    //         })
+    //     })
+    // })
+</script>
+</body>
+</html>

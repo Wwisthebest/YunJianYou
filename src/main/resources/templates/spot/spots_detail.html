@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Responsive Html5 Templates">
+    <meta name="author" content="">
+    <link rel="icon" href="../static/images/icon.png" th:href="@{/images/icon.png}">
+    <title>景点详情</title>
+
+    <!--导入layui-->
+    <link href="../../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <!-- Bootstrap CSS-->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/ticket.css" th:href="@{/css/ticket.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+    <!-- Custom Fonts -->
+    <link href="../../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+</head>
+<body>
+<!--导航栏-->
+<nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-transparent">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <img src="../static/images/logo.png" th:src="@{/images/logo.png}" style="width: 190px; height:50px;float: left;" >
+            <ul class="nav navbar-nav navbar-right">
+                <!--TODO 导航栏功能跳转按钮，后期添加-->
+                <li><a th:href="@{/index}"><i class="layui-icon layui-icon-home" style="font-size: 18px" ></i> 首页</a></li>
+                <li><a th:if="${session.user!=null}" href="/user_info" th:text="'欢迎你：'+${session.user.uName}"></a></li>
+                <li><a th:if="${session.user==null}" href="/login"><i class="layui-icon layui-icon-user" style="font-size: 18px" ></i> 登录 | 注册</a></li>
+                <li><a th:if="${session.user!=null}" href="/logout"><i class="layui-icon layui-icon-logout" style="font-size: 18px" ></i>退出</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--内容-->
+<div id="page-content" class="index-page">
+    <div class="box-content box-style ">
+        <div style="align-content: center;padding-left: 450px">
+            <h1 class="display-5 fw-bold lh-1 mb-3">景点名：[[${scenicSpot.spotName}]]</h1>
+            <img  class="layui-nav-item" th:src="${scenicSpot.getSpotImgUrl()}" style="height:520px; width: 750px;">
+            <p class="lead"><b>景点地址：[[${scenicSpot.spotAddress}]]</b></p>
+            <p class="lead"><b>开放时间：[[${scenicSpot.startTime}]]</b></p>
+            <p class="lead"><b>关闭时间：[[${scenicSpot.endTime}]]</b></p>
+            <p class="lead" th:if="${scenicSpot.soptState}==1"><b>目前状态：已开放</b></p>
+            <p class="lead" th:if="${scenicSpot.soptState}==0"><b>目前状态：未开放</b></p>
+            <p class="lead"><b>门票：&yen<span id="ticketPrice">[[${scenicSpot.ticketPrice}]]</span></b></p>
+            <p class="lead"><b>门票余量：[[${scenicSpot.ticketNum}]]</b></p>
+        </div>
+        <div style="align-content: center;margin-left: 450px">
+            <ul class="list-inline"><hr></ul>
+        </div>
+        <div style="align-content: center;padding-left: 450px">
+            <p class="lead"><b>景点简介：</b></p>
+            <p th:utext="${scenicSpot.spotInfo}"></p>
+        </div>
+        <div style="align-content: center;margin-left: 450px">
+            <ul class="list-inline"><hr></ul>
+        </div>
+        <div style="align-content: center;padding-left: 450px">
+            <p class="lead"><b>景点地图概览：</b></p>
+            <p th:utext="${scenicSpot.mapInfo}"></p>
+        </div>
+        <div style="align-content: center;margin-left: 450px">
+            <ul class="list-inline"><hr></ul>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start" >
+            <form id="order" th:action="@{/spotsWeb/pay}" method="post" style="margin-left: 450px">
+                <input type="hidden" name="ticketPrice" th:value="${scenicSpot.ticketPrice}" />
+                <input type="hidden" name="spotName" th:value="${scenicSpot.spotName}" />
+                <span><b style="font-size: 16px">购买数量：</b></span><input required id="buyNum" style="width: 500px" class="form-control" placeholder="购买数量应大于0" name="num"/>
+                <button id="buy" type="submit"  class="btn btn-primary btn-lg px-4 me-md-2"><span class="glyphicon glyphicon-shopping-cart " style="font-size: 15px"></span> 购买</button>
+                <div id="errorMessage" class="alert alert-danger" role="alert" style="display: none;"></div>
+                <a class="btn btn-primary" style="font-size: 20px;" onclick="goBack()" }><span class="glyphicon glyphicon-remove-circle" style="font-size: 15px"></span> 关闭</a>
+                <button type="button" class="btn btn-primary" th:onclick="addCollect()" ><i class="fa fa-heart" style="font-size: 15px"></i> 收藏</button>
+            </form>
+            <input th:id="ssName" th:value="${scenicSpot.getSpotName()}" type="hidden">
+            <input th:id="ssPrice" th:value="${scenicSpot.getTicketPrice()}" type="hidden">
+            <input th:id="ssId" th:value="${scenicSpot.getId()}" type="hidden">
+            <input th:id="ssAddress" th:value="${scenicSpot.getSpotAddress()}" type="hidden">
+        </div>
+
+
+    </div>
+</div>
+
+<!--页脚 -->
+<footer>
+    <div id="footer">
+        <div class="container">
+            <br style="color: deepskyblue;",>Copyright © 2023 丽江文化旅游学院   </br>
+            <br style="color: deepskyblue;">All Rights Reserved & ICP Licensed</br>
+            <br style="color: deepskyblue;">onlinefun.fun 滇ICP备:2023002014号 </br>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="../static/js/jquery-2.1.1.js" th:src="@{/js/jquery-2.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../static/js/SmoothScroll.js" th:src="@{/js/SmoothScroll.js}"></script>
+<script type="text/javascript" src="../static/js/wow.min.js" th:src="@{/js/wow.min.js}"></script>
+<script type="text/javascript" src="../static/js/jquery.isotope.js" th:src="@{/js/jquery.isotope.js}"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<!--导入layui js文件-->
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+
+<script>
+    <!--返回上一页-->
+    function goBack() {
+        window.history.back();
+    }
+
+</script>
+<script>
+
+    function addCollect() {
+        var ssName = $('#ssName').val();
+        console.log(ssName);
+        var ssPrice = $('#ssPrice').val();
+        console.log(ssPrice);
+        var ssId = $('#ssId').val();
+        console.log(ssId);
+        var ssAddress = $('#ssAddress').val();
+        console.log(ssAddress);
+
+        var data = {
+            ssName: ssName,
+            ssPrice: ssPrice,
+            ssId: ssId,
+            ssAddress: ssAddress
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/collect/addCollect',
+            contentType: 'application/json', // 设置contentType为json
+            data: JSON.stringify(data), // 将数据转换为JSON字符串
+            success: function (response) {
+                // 成功时弹出提示框
+                alert('收藏成功！');
+            },
+            error: function () {
+                // 处理错误情况
+                alert('收藏失败，请稍后再试。');
+            }
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加货物信息</title>
+		<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+	</head>
+	<body>
+		<div class="layui-container" style="margin-top:20px;">
+			<div class="layui-row">
+				<div class="layui-col-md8 layui-col-md-offset2">
+					<form class="layui-form layui-form-pane" >
+						<div class="layui-form-item">
+						  <label class="layui-form-label">真实姓名</label>
+						  <div class="layui-input-inline">
+						    <input type="text" name="uName" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						  </div>
+						  <div class="layui-form-mid layui-text-em">请务必填写真实姓名</div>
+						</div>
+						<div class="layui-form-item">
+						  <label class="layui-form-label">昵称</label>
+						  <div class="layui-input-inline">
+						    <input type="text" name="uNickName" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						  </div>
+						</div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">身份证号</label>
+					    <div class="layui-input-block">
+					      <input type="text" name="uIdNum" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">注册手机号</label>
+					    <div class="layui-input-block">
+					      <input type="text" name="phone" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">注册邮箱</label>
+					    <div class="layui-input-inline">
+					      <input type="text" name="email" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+						  <div class="layui-form-item">
+							  <label class="layui-form-label">性别</label>
+							  <div class="layui-input-inline" id="sex">
+								  <input type="radio" name="isState" value="1" title="男" checked>
+								  <input type="radio" name="isState" value="0" title="女" >
+							  </div>
+						  </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">密码</label>
+					    <div class="layui-input-inline">
+					      <input type="text" name="uPassword" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label">头像</label>
+					    <div class="layui-input-block">
+							<div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+								<i class="layui-icon layui-icon-upload"></i>
+								<div>点击上传，或将文件拖传到此处</div>
+								<div class="layui-hide" id="ID-upload-demo-preview">
+									<hr> <img src="" alt="上传成功后渲染" style="max-width: 100%;">
+								</div>
+							</div>
+						</div>
+					    <!--隐藏域-->
+					    <input type="hidden" name="userAddress" id="userAddress"/>
+					    <input type="hidden" name="userUrl" id="userUrl"/>
+					  </div>
+
+					  <div class="layui-form-item">
+					    <button class="layui-btn" lay-submit lay-filter="add">添加</button>
+					    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+		<script>
+			layui.use(function(){
+				let laydate=layui.laydate;
+				let $ = layui.$;
+				let layer=layui.layer;
+				let form=layui.form;
+				let upload=layui.upload;
+
+				//图片上传
+				upload.render({
+					elem:'#ID-upload-demo-drag',
+					url: 'http://localhost:8086/file/upload',
+					done:function (res) {
+						console.log(res);
+						//将图片的服务器地址和本机的真实地址设置到对应的隐藏域中
+						$("#userAddress").val(res.data.userAddress);
+						$("#userUrl").val(res.data);
+
+						layer.msg('上传成功');
+						$('#ID-upload-demo-preview').removeClass('layui-hide')
+								.find('img').attr('src',res.data);
+					}
+				});
+
+				//表单提交事件
+				form.on("submit(add)",function(data){
+					let field=data.field;
+					//AJAX向后端发送请求
+					$.ajax({
+						type:"post",
+						url:"http://localhost:8086/user/addUser",
+						data:JSON.stringify(field),
+						contentType:'application/json',
+						dataType:"json",
+						success:function(d){
+							console.log(d)
+							if(d.code==0){
+								//关闭弹出层
+								let index=parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+							}else{
+								layer.msg(d.msg);
+							}
+						}
+					});
+					return false;
+				});
+				
+				
+			})
+		</script>
+	</body>
+
+</html>

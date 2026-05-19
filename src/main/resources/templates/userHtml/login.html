@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>云间游系统-用户登录</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/login_style.css" th:href="@{/css/login_style.css}"/>
+</head>
+<body>
+    <!--整体布局-->
+    <div class="container right-panel-active">
+
+        <!--登录框-->
+        <div class="container_from container--signup">
+            <form class="from" id="from1" method="post" action="/user_login">
+                <h2 class="from_title">欢迎登录</h2>
+                <input type="text" id="phone" name="phone" required="required" lay-verify="phone" placeholder="请输入用户手机号" autocomplete="off" class="input"/>
+                <input type="password" id="uPassword" name="uPassword" required="required" lay-verify="uPassword" placeholder="请输入用户密码" autocomplete="off" class="input"/>
+                <input type="text" id="code" name="userCode" required="required" lay-verify="userCode" placeholder="请输入验证码" autocomplete="off" class="input"/>
+                <img src="/createImage" id="captcha" style="cursor: pointer;float:left" onclick="this.src=this.src+'?d='+Math.random();" title="点击刷新" alt="captcha">
+                <a href="#" class="link">忘记密码?</a>
+                <div><p th:text="${message}" style="color: red"></p></div>
+                <button class="btn">登录</button>
+                <a href="/to_faceLogin">人脸登陆</a>
+            </form>
+        </div>
+
+        <!--注册框-->
+        <div class="container_from container--signin">
+            <form class="from" id="from2" onsubmit="return false;">
+                <h2 class="from_title">注册账号</h2>
+                <input type="text" id="n_uName" name="n_uName" required="required" placeholder="请输入用户名" autocomplete="off" class="input"/>
+                <input type="text" id="n_phone" name="n_phone" required="required"  placeholder="请输入注册手机号" autocomplete="off" class="input"/>
+                <input type="password" id="n_uPassword" name="n_uPassword" required="required"  placeholder="请输入密码" autocomplete="off" class="input"/>
+                <input type="email" id="n_email" name="n_email" required="required"  placeholder="请输入注册邮箱" autocomplete="off" class="input"/>
+                <button class="btn" id="registry">注册</button>
+            </form>
+        </div>
+
+        <div class="container_overlay">
+            <div class="overlay">
+                <div class="overlay_panel overlay--right">
+                    <button class="btn" id="signup">已有账号，直接登录</button>
+                </div>
+
+                <div class="overlay_panel overlay--left">
+                    <button class="btn" id="signin">没有账号，点击注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/jquery-2.1.1.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}" type="text/javascript"></script>
+<script type="text/javascript" charset="UTF-8">
+    //注册账号
+    $("#registry").on("click",function (){
+        $.ajax({
+            url:"/user/register",
+            type:"POST",
+            data:{
+                uName:$("#n_uName").val(),
+                phone:$("#n_phone").val(),
+                uPassword:$("#n_uPassword").val(),
+                email:$("#n_email").val()
+            },
+            resultType:"JSON",
+            success:function (result){
+                alert(result.message);
+            },
+            error:function (result){
+            }
+        });
+    });
+    //登陆账号
+    // $("#login").on("click",function (){
+    //     $.ajax({
+    //         url:"/user/login",
+    //         type:"POST",
+    //         data:{
+    //             phone:$("#phone").val(),
+    //             uPassword:$("#uPassword").val()
+    //         },
+    //         resultType:"JSON",
+    //         success:function (result){
+    //             alert(result.message);
+    //             if(200==result.code){
+    //                 window.location.href="/index";
+    //             }
+    //         },
+    //         error:function (result){
+    //         }
+    //     });
+    // });
+</script>
+</html>

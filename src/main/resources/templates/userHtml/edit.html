@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>编辑用户信息</title>
+		<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+	</head>
+	<body>
+	<div class="layui-container" style="margin-top:20px;">
+		<div class="layui-row">
+			<div class="layui-col-md8 layui-col-md-offset2">
+				<form class="layui-form layui-form-pane" >
+					<input type="hidden" id="id" name="id"/>
+					<div class="layui-form-item">
+						<label class="layui-form-label">真实姓名</label>
+						<div class="layui-input-inline">
+							<input type="text" id="uName" name="uName" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+						<div class="layui-form-mid layui-text-em">请务必填写真实姓名</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">昵称</label>
+						<div class="layui-input-inline">
+							<input type="text" id="uNickName" name="uNickName" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">身份证号</label>
+						<div class="layui-input-block">
+							<input type="text" id="uIdNum" name="uIdNum" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">注册手机号</label>
+						<div class="layui-input-block">
+							<input type="text" id="phone" name="phone" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">注册邮箱</label>
+						<div class="layui-input-inline">
+							<input type="text" id="email" name="email" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">性别</label>
+						<div class="layui-input-inline" id="sex"></div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-inline">
+							<input type="text" id="uPassword" name="uPassword" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">账号状态</label>
+						<div class="layui-input-inline" id="isState"></div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">头像</label>
+						<div class="layui-input-block">
+							<div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+								<i class="layui-icon layui-icon-upload"></i>
+								<div>点击上传，或将文件拖传到此处</div>
+								<div id="ID-upload-demo-preview">
+									<hr> <img id="picId" src="" alt="上传成功后渲染" style="max-width: 100%;">
+								</div>
+							</div>
+						</div>
+						<!--隐藏域-->
+						<input type="hidden" name="userAddress" id="userAddress"/>
+						<input type="hidden" name="userUrl" id="userUrl"/>
+					</div>
+
+					<div class="layui-form-item">
+						<button class="layui-btn" lay-submit lay-filter="edit">更新</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+		<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+		<script>
+			layui.use(function(){
+				let laydate=layui.laydate;
+				let $ = layui.$;
+				let layer=layui.layer;
+				let form=layui.form;
+				let upload=layui.upload;
+
+				//获取当前页面地址
+				let url=location.href;
+				//截取参数
+				let param=url.substring(url.lastIndexOf("?")+1,url.length);
+				let ps=param.split("&");
+				//截取参数
+				let obj={};
+				if (ps&&ps.length>0){
+					for (let i=0;i<ps.length;i++){
+						let psList=ps[i].split("=");
+						obj[psList[0].trim()]=psList[1].trim();
+					}
+				}
+				console.log(obj);
+
+				//图片上传
+				upload.render({
+					elem:'#ID-upload-demo-drag',
+					url: 'http://localhost:8086/file/upload',
+					done:function (res) {
+						console.log(res);
+						//将图片的服务器地址和本机的真实地址设置到对应的隐藏域中
+						$("#userAddress").val(res.data.userAddress);
+						$("#userUrl").val(res.data);
+
+						layer.msg('上传成功');
+						$('#ID-upload-demo-preview').find('img').attr('src',res.data);
+					}
+				});
+
+				//单选框回显
+				let str='';
+				if (obj.isState==1){
+					str+='<input type="radio" name="isState" value="0" title="离线" >';
+					str+='<input type="radio" name="isState" value="1" title="在线" checked>';
+				}else {
+					str+='<input type="radio" name="isState" value="0" title="离线" checked>';
+					str+='<input type="radio" name="isState" value="1" title="在线" >';
+				}
+				let st='';
+				if (obj.sex==1){
+					st+='<input type="radio" name="sex" value="0" title="女" >';
+					st+='<input type="radio" name="sex" value="1" title="男" checked>';
+				}else {
+					st+='<input type="radio" name="sex" value="0" title="女" checked>';
+					st+='<input type="radio" name="sex" value="1" title="男" >';
+				}
+				//将拼接好的单选框设置到指定为止
+				$("#isState").html(str);
+				$("#sex").html(st);
+				//重新渲染
+				form.render('radio');
+
+
+				form.on("submit(edit)",function(data){
+					let field=data.field;
+					//AJAX向后端发送请求
+					$.ajax({
+						type:"put",
+						url:"http://localhost:8086/user/updateUser",
+						data:JSON.stringify(field),
+						contentType:'application/json',
+						dataType:"json",
+						success:function(d){
+							console.log(d)
+							if(d.code==0){
+								let index=parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+							}else{
+								layer.msg(d.msg);
+							}
+						}
+					});
+					return false;
+				});
+				
+				
+			})
+		</script>
+	</body>
+
+</html>
